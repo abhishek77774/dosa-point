@@ -5,10 +5,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-xl-7 mx-auto">
-                            <h3 class="display-4 justify-content-center">Login</h3>
+                            <h3 class="display-4">Login</h3>
                             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                                 <div class="form-group mb-3">
-                                    <input id="inputMobile" type="number" formControlName="mobile"  [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" placeholder="Mobile Number" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputMobile" type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" formControlName="mobile"  [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" placeholder="Mobile Number" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
                                         <div *ngIf="f.mobile.errors.required">Mobile Number is required</div>
                                         <div *ngIf="f.mobile.errors.pattern">Please Enter 10 Digits Mobile Number </div>
