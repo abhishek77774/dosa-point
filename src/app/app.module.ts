@@ -9,6 +9,7 @@ import { MenuComponent } from './components/customer/menu/menu.component';
 import { OrderComponent } from './components/customer/order/order.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { FooterComponent } from './components/common/footer/footer.component';
+import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FooterComponent } from './components/common/footer/footer.component';
     MenuComponent,
     OrderComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

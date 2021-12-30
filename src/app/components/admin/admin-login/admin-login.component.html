@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-xl-7 mx-auto">
-                            <h3 class="display-4 text-center">Login</h3>
+                            <h3 class="display-4 text-center">Admin Login</h3>
                             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                                 <div class="form-group mb-3">
                                     <input id="inputMobile" type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" formControlName="mobile"  [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" placeholder="Mobile Number" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
@@ -25,7 +25,7 @@
 
                                 
                                 <div class="d-flex flex-row-reverse bd-highlight">
-                                    <div class="p-2 bd-highlight"><a routerLink="/admin-login">Admin Login</a></div>
+                                    <div class="p-2 bd-highlight"><a routerLink="/customer-login">Customer Login</a></div>
                                   </div>
                             </form>
                         </div>
