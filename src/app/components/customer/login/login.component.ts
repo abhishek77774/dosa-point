@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -8,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   loginForm:any =  FormGroup;
   submitted = false;
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
     if(this.submitted)
     {
       //To do: User authentication
-      alert("Great!!");
+      //alert("Great!!");
+      this.router.navigate(['/menu']);
     }
   
   }

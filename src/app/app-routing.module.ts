@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { LoginComponent } from './components/customer/login/login.component';
+import { MenuComponent } from './components/customer/menu/menu.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
     {
       path: 'customer-login',
       component: LoginComponent
+    },
+
+    {
+      path: 'menu',
+      component: MenuComponent
     }
 ];
 
