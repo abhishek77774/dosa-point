@@ -14,6 +14,7 @@ export class AdminLoginComponent implements OnInit {
 
   adminLoginForm:any =  FormGroup;
   submitted = false;
+  loading = false;
 
   //Add user form actions
   get f() { return this.adminLoginForm.controls; }

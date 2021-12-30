@@ -21,7 +21,9 @@
                                      </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login</button>
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                </button>
 
                                 
                                 <div class="d-flex flex-row-reverse bd-highlight">
