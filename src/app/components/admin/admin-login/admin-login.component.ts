@@ -12,16 +12,16 @@ export class AdminLoginComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder) { }
 
-  registerForm:any =  FormGroup;
+  adminLoginForm:any =  FormGroup;
   submitted = false;
 
   //Add user form actions
-  get f() { return this.registerForm.controls; }
+  get f() { return this.adminLoginForm.controls; }
   onSubmit() {
     
     this.submitted = true;
     // stop here if form is invalid
-    if (this.registerForm.invalid) {
+    if (this.adminLoginForm.invalid) {
         return;
     }
     //True if all the fields are filled
@@ -35,7 +35,7 @@ export class AdminLoginComponent implements OnInit {
 
   ngOnInit(): void {
     //login form
-   this.registerForm = this.formBuilder.group({
+   this.adminLoginForm = this.formBuilder.group({
     mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     password: ['', [Validators.required]],
     });
