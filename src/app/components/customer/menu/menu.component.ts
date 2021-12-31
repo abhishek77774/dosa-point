@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   quantity:number = 0;
   dosaQuantity:number = 0;
@@ -83,6 +85,10 @@ export class MenuComponent implements OnInit {
 
   orderConfirmation()
   {
-    confirm("Total Amount is: "+this.finalAmount +". Confirm the order?")
+    let isOrderConfirmed = confirm("Total Amount is: "+this.finalAmount +". Confirm the order?");
+    if(isOrderConfirmed)
+    {
+      this.router.navigate(['/order-confirmation']);
+    }
   }
 }

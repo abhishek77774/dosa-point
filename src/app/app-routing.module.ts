@@ -4,6 +4,7 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
 import { CustomerRegistrationComponent } from './components/customer/customer-registration/customer-registration.component';
 import { LoginComponent } from './components/customer/login/login.component';
 import { MenuComponent } from './components/customer/menu/menu.component';
+import { OrderComponent } from './components/customer/order/order.component';
 import { RegistrationSuccessComponent } from './components/customer/registration-success/registration-success.component';
 
 const routes: Routes = [
@@ -33,6 +34,11 @@ const routes: Routes = [
     {
       path: 'menu',
       component: MenuComponent
+    },
+
+    {
+      path: 'order-confirmation',
+      component: OrderComponent
     }
 ];
 

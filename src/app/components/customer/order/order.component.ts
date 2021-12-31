@@ -9,6 +9,8 @@ export class OrderComponent implements OnInit {
 
   constructor() { }
 
+  orderNumber:number=0;
+  
   ngOnInit(): void {
   }
 
