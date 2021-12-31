@@ -10,6 +10,8 @@ import { OrderComponent } from './components/customer/order/order.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
+import { CustomerRegistrationComponent } from './components/customer/customer-registration/customer-registration.component';
+import { RegistrationSuccessComponent } from './components/customer/registration-success/registration-success.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
     OrderComponent,
     HeaderComponent,
     FooterComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    CustomerRegistrationComponent,
+    RegistrationSuccessComponent
   ],
   imports: [
     BrowserModule,

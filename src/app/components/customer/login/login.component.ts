@@ -27,12 +27,11 @@ export class LoginComponent implements OnInit {
     if(this.submitted)
     {
       //To do: User authentication
-      //alert("Great!!");
+      //after authentication redirect to customer to menu page
       this.router.navigate(['/menu']);
     }
   
   }
-
 
   ngOnInit(): void {
     //login form
