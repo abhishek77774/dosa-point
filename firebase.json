@@ -14,9 +14,8 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/404.html"
       }
-    ],
-    "cleanUrls": true
+    ]
   }
 }
