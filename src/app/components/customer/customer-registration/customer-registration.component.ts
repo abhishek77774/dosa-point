@@ -35,8 +35,7 @@ export class CustomerRegistrationComponent implements OnInit {
     this.registrationForm.controls['activated'].setValue(false);
     let formData = this.registrationForm.value;
 
-    this.userService.readFromUsersCollection();
-     // this.userService.writeToUsersCollection(formData);
+     this.userService.writeToUsersCollection(formData);
       this.router.navigate(['/registration-success']);
     }
   

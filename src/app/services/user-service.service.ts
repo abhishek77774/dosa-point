@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore"
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore"
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyB3EE-fMVGHKpXDC4rs3-jUf1Z7KHEbGYs",
@@ -9,20 +9,25 @@ const firebaseApp = initializeApp({
 });
 
 const db = getFirestore();
-const users = doc(db, 'users/3');
+//const users = doc(db, 'users/3');
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserServiceService {
 
   async writeToUsersCollection(formdata:any)
   {
-    await setDoc(users, formdata);
+    const docRef = await addDoc(collection(db, "users"),
+    {
+      formdata
+    });
   }
 
-  async readFromUsersCollection()
+  async readFromUsersCollectionForFirstEntry()
   {
+    const users = doc(db, 'users/1');
     const myData = await getDoc(users);
     if(myData.exists())
     {
