@@ -19,10 +19,7 @@ export class UserServiceService {
 
   async writeToUsersCollection(formdata:any)
   {
-    const docRef = await addDoc(collection(db, "users"),
-    {
-      formdata
-    });
+    const docRef = await addDoc(collection(db, "users"), formdata);
   }
 
   async readFromUsersCollectionForFirstEntry()
@@ -37,6 +34,4 @@ export class UserServiceService {
   }
   
   constructor() { }
-
- 
 }

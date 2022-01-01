@@ -33,6 +33,7 @@ export class CustomerRegistrationComponent implements OnInit {
     this.loading = true;
     this.registrationForm.controls['role'].setValue("user");
     this.registrationForm.controls['activated'].setValue(false);
+    this.registrationForm.controls['timeStamp'].setValue(new Date());
     let formData = this.registrationForm.value;
 
      this.userService.writeToUsersCollection(formData);
@@ -49,7 +50,8 @@ export class CustomerRegistrationComponent implements OnInit {
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]],
     role: [''],
-    activated: ['']
+    activated: [''],
+    timeStamp: ['']
     },
     { 
       validator: ConfirmedValidator('password', 'confirmPassword')
