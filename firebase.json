@@ -14,8 +14,8 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/404.html"
-      }
+        "destination": "/index.html"
+    }
     ]
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmedValidator } from 'src/app/confirmed.validator';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-customer-registration',
@@ -10,7 +11,8 @@ import { ConfirmedValidator } from 'src/app/confirmed.validator';
 })
 export class CustomerRegistrationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private userService: UserServiceService) { }
 
   registrationForm:any =  FormGroup;
   submitted = false;
@@ -28,6 +30,13 @@ export class CustomerRegistrationComponent implements OnInit {
     {
       //To do: User authentication
       //after successfull registration redirect to success page
+    this.loading = true;
+    this.registrationForm.controls['role'].setValue("user");
+    this.registrationForm.controls['activated'].setValue(false);
+    let formData = this.registrationForm.value;
+
+    this.userService.readFromUsersCollection();
+     // this.userService.writeToUsersCollection(formData);
       this.router.navigate(['/registration-success']);
     }
   
@@ -40,6 +49,8 @@ export class CustomerRegistrationComponent implements OnInit {
     mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]],
+    role: [''],
+    activated: ['']
     },
     { 
       validator: ConfirmedValidator('password', 'confirmPassword')

@@ -35,7 +35,12 @@
                                         <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
                                         <div *ngIf="f.confirmPassword.errors.confirmedValidator">Password and Confirm Password must be same.</div>
                                      </div>
+                                     <input id="role" type="text" formControlName="role" class="form-control" hidden>
+                                   
+                                     <input id="isActivated" type="text" formControlName="activated" class="form-control" hidden >
+                                   
                                 </div>
+                                
 
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login
                                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
