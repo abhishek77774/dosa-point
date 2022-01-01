@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 
 @Component({
@@ -10,7 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private userService: UserServiceService) { }
 
   loginForm:any =  FormGroup;
   submitted = false;
@@ -23,18 +25,15 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    //True if all the fields are filled
     if(this.submitted)
     {
-      //To do: User authentication
-      //after authentication redirect to customer to menu page
-      this.router.navigate(['/menu']);
+      console.log(this.userService.verifyCredentials(this.loginForm.value));
+      //this.router.navigate(['/menu']);
     }
   
   }
 
   ngOnInit(): void {
-    //login form
    this.loginForm = this.formBuilder.group({
     mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     password: ['', [Validators.required]],

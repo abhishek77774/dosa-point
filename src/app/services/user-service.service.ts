@@ -17,21 +17,31 @@ const db = getFirestore();
 
 export class UserServiceService {
 
+  constructor() { }
+
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
   }
 
-  async readFromUsersCollectionForFirstEntry()
+  async verifyCredentials(loginFormData:any)
   {
-    console.log("calling");
-    const q = query(collection(db, "users"), where("mobile", "==", "9999999999"));
+    const q = query(collection(db, "users"), where("mobile", "==", loginFormData["mobile"]), where("password", "==", loginFormData["password"]));
     const querySnapshot = await getDocs(q);
+    if(querySnapshot.size>0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+    /*
     querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-});
+    console.log(doc.id, " => ", doc.data());  
+    });
+    */
   }
   
-  constructor() { }
 }

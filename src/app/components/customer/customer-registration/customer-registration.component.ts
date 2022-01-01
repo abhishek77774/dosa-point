@@ -36,8 +36,7 @@ export class CustomerRegistrationComponent implements OnInit {
     this.registrationForm.controls['timeStamp'].setValue(new Date());
     let formData = this.registrationForm.value;
 
-     //this.userService.writeToUsersCollection(formData);
-      this.userService.readFromUsersCollectionForFirstEntry();
+      this.userService.writeToUsersCollection(formData);
       this.router.navigate(['/registration-success']);
     }
   
