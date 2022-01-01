@@ -12,6 +12,9 @@ import { FooterComponent } from './components/common/footer/footer.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { CustomerRegistrationComponent } from './components/customer/customer-registration/customer-registration.component';
 import { RegistrationSuccessComponent } from './components/customer/registration-success/registration-success.component';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
+import { ViewUsersComponent } from './components/admin/view-users/view-users.component';
+import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { RegistrationSuccessComponent } from './components/customer/registration
     FooterComponent,
     AdminLoginComponent,
     CustomerRegistrationComponent,
-    RegistrationSuccessComponent
+    RegistrationSuccessComponent,
+    AdminHomeComponent,
+    ViewUsersComponent,
+    ViewOrdersComponent
   ],
   imports: [
     BrowserModule,

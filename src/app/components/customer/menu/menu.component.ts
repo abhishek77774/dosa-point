@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -19,6 +18,8 @@ export class MenuComponent implements OnInit {
   idlyAmount:number = 0;
   bondaAmount:number = 0;
   finalAmount:number = 0;
+  orderError = false;
+
   ngOnInit(): void {
   }
 
@@ -30,16 +31,19 @@ export class MenuComponent implements OnInit {
       this.dosaQuantity = this.dosaQuantity+1;
       this.dosaAmount = this.dosaQuantity * 20;
       this.finalAmount = this.finalAmount + this.dosaAmount;
+      this.orderError = false;
       break;
       case 2:
       this.idlyQuantity = this.idlyQuantity+1;
       this.idlyAmount = this.idlyQuantity * 15;
       this.finalAmount = this.finalAmount + this.idlyAmount;
+      this.orderError = false;
       break;
       case 3:
       this.bondaQuantity = this.bondaQuantity+1;
       this.bondaAmount = this.bondaQuantity * 20;
       this.finalAmount = this.finalAmount + this.bondaAmount;
+      this.orderError = false;
       break;
       default:
         break;
@@ -85,10 +89,17 @@ export class MenuComponent implements OnInit {
 
   orderConfirmation()
   {
+    if(this.finalAmount<=0)
+    {
+      this.orderError = true;
+    }
+    else
+    {
     let isOrderConfirmed = confirm("Total Amount is: "+this.finalAmount +". Confirm the order?");
     if(isOrderConfirmed)
     {
-      this.router.navigate(['/order-confirmation']);
-    }
+      this.router.navigate(['/order']);
+    } 
+  }
   }
 }

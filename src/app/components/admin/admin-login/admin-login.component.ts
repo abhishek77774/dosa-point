@@ -16,27 +16,22 @@ export class AdminLoginComponent implements OnInit {
   submitted = false;
   loading = false;
 
-  //Add user form actions
   get f() { return this.adminLoginForm.controls; }
   onSubmit() {
     
     this.submitted = true;
-    // stop here if form is invalid
     if (this.adminLoginForm.invalid) {
         return;
     }
-    //True if all the fields are filled
     if(this.submitted)
     {
-      alert("Great!!");
-      this.router.navigate(["Enter navigation here"]);
+      this.router.navigate(['/admin-home']);
     }
   
   }
 
 
   ngOnInit(): void {
-    //login form
    this.adminLoginForm = this.formBuilder.group({
     mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     password: ['', [Validators.required]],

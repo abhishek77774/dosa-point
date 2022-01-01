@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
+import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.component';
+import { ViewUsersComponent } from './components/admin/view-users/view-users.component';
 import { CustomerRegistrationComponent } from './components/customer/customer-registration/customer-registration.component';
 import { LoginComponent } from './components/customer/login/login.component';
 import { MenuComponent } from './components/customer/menu/menu.component';
@@ -37,9 +40,25 @@ const routes: Routes = [
     },
 
     {
-      path: 'order-confirmation',
+      path: 'admin-home',
+      component: AdminHomeComponent
+    },
+
+    {
+      path: 'view-orders',
+      component: ViewOrdersComponent
+    },
+
+    {
+      path: 'view-users',
+      component: ViewUsersComponent
+    },
+
+    {
+      path: 'order',
       component: OrderComponent
     }
+
 ];
 
 @NgModule({
