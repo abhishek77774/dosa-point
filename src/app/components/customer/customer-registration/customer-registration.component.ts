@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmedValidator } from 'src/app/confirmed.validator';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-customer-registration',
@@ -30,13 +29,11 @@ export class CustomerRegistrationComponent implements OnInit {
     if(this.submitted)
     {
       
-      console.log(Md5.hashStr(this.registrationForm.controls['password']));
     this.loading = true;
     this.registrationForm.controls['role'].setValue("user");
     this.registrationForm.controls['activated'].setValue(false);
     this.registrationForm.controls['timeStamp'].setValue(new Date());
-    this.registrationForm.controls['password'].setValue(Md5.hashStr(this.registrationForm.controls['confirmPassword']));
-    
+
     let formData = this.registrationForm.value;
 
       this.userService.writeToUsersCollection(formData);

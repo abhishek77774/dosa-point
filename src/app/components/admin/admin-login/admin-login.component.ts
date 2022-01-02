@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Md5 } from 'ts-md5';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,26 +11,49 @@ import { Md5 } from 'ts-md5';
 export class AdminLoginComponent implements OnInit {
 
   
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private userService: UserServiceService) { }
 
   adminLoginForm:any =  FormGroup;
   submitted = false;
   loading = false;
+  credentialsError = false;
+  notRegisteredError = false;
 
   get f() { return this.adminLoginForm.controls; }
   onSubmit() {
     
     this.submitted = true;
+    this.credentialsError = false;
+    this.notRegisteredError = false;
+
     if (this.adminLoginForm.invalid) {
         return;
     }
+
     if(this.submitted)
     {
-      this.adminLoginForm.controls['password'].setValue(Md5.hashStr(this.adminLoginForm.controls['password']));
-      
-      this.router.navigate(['/admin-home']);
+      this.userService.verifyAdminCredentials(this.adminLoginForm.value).then(status => 
+        {
+         if(status == 1)
+         {   
+          console.log("true");
+          this.loading = false;
+          this.router.navigate(['/admin-home']);
+         }
+         else if(status == 2)
+         {   
+          this.loading = false;
+          this.notRegisteredError = true;
+         }
+         else
+         {
+          this.loading = false;
+          this.credentialsError = true;
+         } 
+        });
     }
-  
+     
   }
 
 

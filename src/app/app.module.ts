@@ -16,7 +16,6 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 import { ViewUsersComponent } from './components/admin/view-users/view-users.component';
 import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

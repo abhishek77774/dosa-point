@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { Md5 } from 'ts-md5';
 
 
 @Component({
@@ -36,8 +35,7 @@ export class LoginComponent implements OnInit {
     if(this.submitted)
     {
       this.loading = true;
-      this.loginForm.controls['password'].setValue(Md5.hashStr(this.loginForm.controls['password']));
-      
+    
       this.userService.verifyCredentials(this.loginForm.value).then(status => 
         {
          if(status == 1)

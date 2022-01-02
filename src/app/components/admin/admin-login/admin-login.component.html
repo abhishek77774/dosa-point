@@ -21,6 +21,9 @@
                                      </div>
                                 </div>
 
+                                <div *ngIf="credentialsError">Invalid Password! Please retry.</div> 
+                                <div *ngIf="notRegisteredError">Mobile number is not registered as Admin.</div> 
+
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login
                                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                 </button>
