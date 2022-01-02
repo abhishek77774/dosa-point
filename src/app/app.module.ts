@@ -15,6 +15,10 @@ import { RegistrationSuccessComponent } from './components/customer/registration
 import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { ViewUsersComponent } from './components/admin/view-users/view-users.component';
 import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,10 @@ import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]

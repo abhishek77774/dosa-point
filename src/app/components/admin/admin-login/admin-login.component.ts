@@ -66,6 +66,11 @@ export class AdminLoginComponent implements OnInit {
         this.notRegisteredError = true;
         this.loading = false;
       }
+      else if (errorCode == "auth/wrong-password")
+      {
+        this.credentialsError = true;
+        this.loading = false;
+      }
       console.log("Error:", errorMessage, errorCode)
       console.log("error code:", errorCode)
     });

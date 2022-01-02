@@ -10,10 +10,12 @@ import { MenuComponent } from './components/customer/menu/menu.component';
 import { OrderComponent } from './components/customer/order/order.component';
 import { RegistrationSuccessComponent } from './components/customer/registration-success/registration-success.component';
 
+
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    
 },
   {
     path: 'admin-login',
