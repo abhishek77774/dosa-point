@@ -17,20 +17,47 @@ export class LoginComponent implements OnInit {
   loginForm:any =  FormGroup;
   submitted = false;
   loading = false;
+  credentialsError = false;
+  activationError = false;
 
   get f() { return this.loginForm.controls; }
-  onSubmit() {
-    
+  
+  onSubmit() { 
     this.submitted = true;
     if (this.loginForm.invalid) {
         return;
     }
     if(this.submitted)
     {
-      console.log(this.userService.verifyCredentials(this.loginForm.value));
-      //this.router.navigate(['/menu']);
+      this.loading = true;
+      this.userService.verifyCredentials(this.loginForm.value).then(status => 
+        {
+         if(status == 1)
+         {   
+          console.log("true");
+          this.loading = false;
+          this.router.navigate(['/menu']);
+         }
+         else if(status == 2)
+         {   
+          this.loading = false;
+          console.log("not registered");
+          // set error here
+         }
+         else if(status == 3)
+         {   
+          this.loading = false;
+          console.log("not activated");
+          // set error here
+         }
+         else
+         {
+          this.loading = false;
+          console.log("Invalid Password! Please retry with correct password.");  
+          // set error here   
+         } 
+        });
     }
-  
   }
 
   ngOnInit(): void {

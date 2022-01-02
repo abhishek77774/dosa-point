@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
-import { getFirestore, doc, query, where, getDocs, getDoc, collection, addDoc } from "firebase/firestore"
+import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData } from "firebase/firestore"
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyB3EE-fMVGHKpXDC4rs3-jUf1Z7KHEbGYs",
@@ -9,7 +9,6 @@ const firebaseApp = initializeApp({
 });
 
 const db = getFirestore();
-//const users = doc(db, 'users/3');
 
 @Injectable({
   providedIn: 'root'
@@ -19,29 +18,43 @@ export class UserServiceService {
 
   constructor() { }
 
+  readData:any;
+
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
+    //return docRef;
   }
 
   async verifyCredentials(loginFormData:any)
-  {
-    const q = query(collection(db, "users"), where("mobile", "==", loginFormData["mobile"]), where("password", "==", loginFormData["password"]));
-    const querySnapshot = await getDocs(q);
-    if(querySnapshot.size>0)
+  { 
+    const checkCredentialsQuery = query(collection(db, "users"), where("mobile", "==", loginFormData["mobile"]), where("password", "==", loginFormData["password"])
+    ,where("activated", "==", true));
+    const querySnapshotForCredentials = await getDocs(checkCredentialsQuery);
+
+    if(querySnapshotForCredentials.size>0)
     {
-      return true;
+      return 1;
     }
-    else
+
+    const checkMobileQuery = query(collection(db, "users"), where("mobile", "==", loginFormData["mobile"]));
+    const querySnapshotforMobile = await getDocs(checkMobileQuery);
+    
+    if(querySnapshotforMobile.size<=0)
     {
-      return false;
+      return 2;
     }
-    /*
-    querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());  
-    });
-    */
+
+    const checkAccountQuery = query(collection(db, "users"), where("mobile", "==", loginFormData["mobile"]), where("activated", "==", false));
+    const querySnapshotforAccount = await getDocs(checkAccountQuery);
+    
+    if(querySnapshotforAccount.size>0)
+    {
+      return 3;
+    }
+     //return querySnapshot.docs[0].data();
+      return 4;  
   }
   
+
 }
