@@ -75,7 +75,8 @@ export class CustomerRegistrationComponent implements OnInit {
   ngOnInit(): void {
     //Registration form
    this.registrationForm = this.formBuilder.group({
-    fullName: ['', [Validators.required]],
+    fullName: ['', [Validators.required, Validators.maxLength(50),
+      Validators.pattern('^[a-zA-Z ]*$')]],
     mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     email: ['', [Validators.required, Validators.email
       ,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
