@@ -93,6 +93,8 @@ export class CustomerRegistrationComponent implements OnInit {
   registerUserForValidation(registrationFormData:any)
   {
     registrationFormData.controls['role'].setValue("user");
+    registrationFormData.controls['password'].setValue("********");
+    registrationFormData.controls['confirmPassword'].setValue("********");
     registrationFormData.controls['activated'].setValue(false);
     registrationFormData.controls['timeStamp'].setValue(new Date());
 
