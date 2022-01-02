@@ -4,8 +4,11 @@
             <div class="login d-flex align-items-center py-5">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8 col-xl-7 mx-auto">
+                        <div class="col-lg-8 col-xl-8 mx-auto">
                             <h3 class="display-4 text-center">New Registration</h3>
+                            <div class="d-flex justify-content-center">
+                                <div class="p-2 bd-highlight note">(Below details will be verified by admin)</div>
+                            </div>
                             <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
                                 <div class="form-group mb-3">
                                     <div class="form-group mb-3">

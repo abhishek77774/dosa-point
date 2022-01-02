@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-admin-login',
@@ -25,6 +26,8 @@ export class AdminLoginComponent implements OnInit {
     }
     if(this.submitted)
     {
+      this.adminLoginForm.controls['password'].setValue(Md5.hashStr(this.adminLoginForm.controls['password']));
+      
       this.router.navigate(['/admin-home']);
     }
   

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { Md5 } from 'ts-md5';
 
 
 @Component({
@@ -19,17 +20,24 @@ export class LoginComponent implements OnInit {
   loading = false;
   credentialsError = false;
   activationError = false;
+  notRegisteredError = false;
 
   get f() { return this.loginForm.controls; }
   
   onSubmit() { 
     this.submitted = true;
+    this.notRegisteredError = false;
+    this.activationError = false;
+    this.credentialsError = false;
+
     if (this.loginForm.invalid) {
         return;
     }
     if(this.submitted)
     {
       this.loading = true;
+      this.loginForm.controls['password'].setValue(Md5.hashStr(this.loginForm.controls['password']));
+      
       this.userService.verifyCredentials(this.loginForm.value).then(status => 
         {
          if(status == 1)
@@ -41,20 +49,17 @@ export class LoginComponent implements OnInit {
          else if(status == 2)
          {   
           this.loading = false;
-          console.log("not registered");
-          // set error here
+          this.notRegisteredError = true;
          }
          else if(status == 3)
          {   
           this.loading = false;
-          console.log("not activated");
-          // set error here
+          this.activationError = true;
          }
          else
          {
           this.loading = false;
-          console.log("Invalid Password! Please retry with correct password.");  
-          // set error here   
+          this.credentialsError = true;
          } 
         });
     }

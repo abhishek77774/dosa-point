@@ -55,6 +55,5 @@ export class UserServiceService {
      //return querySnapshot.docs[0].data();
       return 4;  
   }
-  
 
 }
