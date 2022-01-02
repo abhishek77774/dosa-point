@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+const auth = getAuth();
 
 @Component({
   selector: 'app-login',
@@ -36,36 +38,48 @@ export class LoginComponent implements OnInit {
     {
       this.loading = true;
     
+      //sign-in process
+      signInWithEmailAndPassword(auth, this.loginForm.value["email"], this.loginForm.value["password"])
+        .then((userCredential) => {
       this.userService.verifyCredentials(this.loginForm.value).then(status => 
         {
-         if(status == 1)
+         if(status == 0)
          {   
-          console.log("true");
-          this.loading = false;
-          this.router.navigate(['/menu']);
-         }
-         else if(status == 2)
-         {   
-          this.loading = false;
-          this.notRegisteredError = true;
-         }
-         else if(status == 3)
-         {   
-          this.loading = false;
           this.activationError = true;
+          this.loading = false;  
          }
+        
          else
          {
           this.loading = false;
-          this.credentialsError = true;
+          const user = userCredential.user;
+          console.log("signed in")
+          this.router.navigate(['/menu']);
          } 
         });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if(errorCode == "auth/user-not-found")
+      {
+        this.notRegisteredError = true;
+        this.loading = false;
+      }
+      else if (errorCode == "auth/wrong-password")
+      {
+        this.credentialsError = true;
+        this.loading = false;
+      }
+    });
+      }
     }
-  }
+
 
   ngOnInit(): void {
    this.loginForm = this.formBuilder.group({
-    mobile: ['', [Validators.required,  Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+    email: ['', [Validators.required, Validators.email
+    ,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     password: ['', [Validators.required]],
     });
   }

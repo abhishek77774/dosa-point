@@ -27,7 +27,7 @@
                            <form [formGroup]="orderDetailsForm" (ngSubmit)="onSubmit()">
                                <div class="form-group mb-3">
                                    <div class="form-group mb-3">
-                                       <input id="orderDateSelector" type="date" formControlName="orderDateSelector" [ngClass]="{ 'is-invalid': submitted && f.orderDateSelector.errors }" placeholder="Select a date" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                   <input id="orderDateSelector" type="date" formControlName="orderDateSelector" [ngClass]="{ 'is-invalid': submitted && f.orderDateSelector.errors }" placeholder="Select a date" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                        <div *ngIf="submitted && f.orderDateSelector.errors" class="invalid-feedback">
                                            <div *ngIf="f.orderDateSelector.errors.required">Date is required</div>
                                        </div>
