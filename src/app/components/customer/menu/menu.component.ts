@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,8 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserServiceService) { }
 
+  menuFromDb=[];
   quantity:number = 0;
   dosaQuantity:number = 0;
   idlyQuantity:number = 0;
@@ -21,6 +23,10 @@ export class MenuComponent implements OnInit {
   orderError = false;
 
   ngOnInit(): void {
+   this.userService.getMenu().then(data=>
+    {
+      console.log(data)
+    });
   }
 
   increaseQuantity(itemNumber:number)

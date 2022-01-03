@@ -5,7 +5,7 @@
           <img src="/assets/icon2.jpg" alt="Dosa Point" width="40" height="34" class="d-inline-block align-text-top">
           Dosa Point
         </a>
-        <a class="navbar-brand" (click)="logout()"><span class="navOption">Logout</span></a>
+        <a class="navbar-brand" *ngIf="!userService.isLoggedIn" (click)="logout()"><span class="navOption">Logout</span></a>
       </div>
     </nav>
   </div>

@@ -10,6 +10,7 @@ const firebaseApp = initializeApp({
   projectId: "dosapointfirebase",
 });
 
+
 const auth = getAuth();
 const db = getFirestore();
 
@@ -22,7 +23,7 @@ export class UserServiceService {
   constructor(private router: Router) { }
 
   readData:any;
-  
+  menuFromDb:any;
 
   async writeToUsersCollection(formdata:any)
   {
@@ -69,9 +70,19 @@ export class UserServiceService {
      return 0;  
   }
 
+  async getMenu()
+  { 
+    
+    const getMenuQuery = query(collection(db, "menu"));
+    const querySnapshotforMenu = await getDocs(getMenuQuery);
+    querySnapshotforMenu.forEach((doc) => {
+    this.menuFromDb = doc.data();
+    });
+    return this.menuFromDb;
+  }
+
   get isLoggedIn(): boolean {
     const user = localStorage.getItem('user');
-    //console.log("user is :", user)
     return (user === null) ? true : false;
   }
 

@@ -15,10 +15,9 @@ import { AuthGuard } from './helpers/auth.guard';
 const routes: Routes = [
     {
     path: '',
-    component: LoginComponent,
-    
+    component: LoginComponent
     },
-  
+
     {
     path: 'admin-login',
     component: AdminLoginComponent},
@@ -35,7 +34,8 @@ const routes: Routes = [
 
     {
       path: 'registration-success',
-      component: RegistrationSuccessComponent
+      component: RegistrationSuccessComponent,
+      canActivate: [AuthGuard],
     },
 
     {
@@ -46,7 +46,9 @@ const routes: Routes = [
 
     {
       path: 'admin-home',
-      component: AdminHomeComponent
+      component: AdminHomeComponent,
+      canActivate: [AuthGuard],
+      
     },
 
     {
@@ -57,12 +59,14 @@ const routes: Routes = [
 
     {
       path: 'view-users',
-      component: ViewUsersComponent
+      component: ViewUsersComponent,
+      canActivate: [AuthGuard],
     },
 
     {
       path: 'order',
-      component: OrderComponent
+      component: OrderComponent,
+      canActivate: [AuthGuard],
     }
 
 ];

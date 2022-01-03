@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { NavigationStart } from '@angular/router';
 
 const auth = getAuth();
 
@@ -11,10 +12,21 @@ const auth = getAuth();
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
+
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
-    private userService: UserServiceService) { }
+    private userService: UserServiceService) {
+      router.events.forEach((event) => {
+        if(event instanceof NavigationStart) {
+          if (event.navigationTrigger === 'popstate') {
+            console.log("back pressed");
+          }
+        }
+      });
+      
+     }
   
   userData: any;
   loginForm:any =  FormGroup;
@@ -63,16 +75,18 @@ export class LoginComponent implements OnInit {
         });
     })
     .catch((error) => {
-      localStorage.setItem('user', "null");
+      localStorage.removeItem('user');
       const errorCode = error.code;
       const errorMessage = error.message;
       if(errorCode == "auth/user-not-found")
       {
+        console.log("User:",localStorage.getItem('user'))
         this.notRegisteredError = true;
         this.loading = false;
       }
       else if (errorCode == "auth/wrong-password")
       {
+        console.log("User:",localStorage.getItem('user'))
         this.credentialsError = true;
         this.loading = false;
       }
@@ -89,4 +103,5 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  
 }
