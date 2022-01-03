@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
 import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData } from "firebase/firestore"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Router } from '@angular/router';
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyB3EE-fMVGHKpXDC4rs3-jUf1Z7KHEbGYs",
@@ -8,6 +10,7 @@ const firebaseApp = initializeApp({
   projectId: "dosapointfirebase",
 });
 
+const auth = getAuth();
 const db = getFirestore();
 
 @Injectable({
@@ -16,7 +19,7 @@ const db = getFirestore();
 
 export class UserServiceService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   readData:any;
   
@@ -70,5 +73,13 @@ export class UserServiceService {
     const user = JSON.parse(localStorage.getItem('user') as string);
     console.log("user is :", user)
     return (user !== "null") ? true : false;
+  }
+
+  
+  SignOut() {
+    auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['customer-login']);
+    })
   }
 }

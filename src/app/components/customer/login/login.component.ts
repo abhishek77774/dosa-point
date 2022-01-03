@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           const user = userCredential.user;
           this.userData = user;
-          //localStorage.setItem('user', JSON.stringify(this.userData));
+          localStorage.setItem('user', JSON.stringify(this.userData));
           ///JSON.parse(localStorage.getItem('user'));
           console.log("signed in")
           this.router.navigate(['/menu']);
@@ -91,11 +91,5 @@ export class LoginComponent implements OnInit {
   }
 
 
-  SignOut() {
-    auth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['customer-login']);
-    })
-  }
 
 }
