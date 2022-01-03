@@ -19,6 +19,7 @@ export class UserServiceService {
   constructor() { }
 
   readData:any;
+  
 
   async writeToUsersCollection(formdata:any)
   {
@@ -63,5 +64,11 @@ export class UserServiceService {
       return 1;
     }
      return 0;  
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    console.log("user is :", user)
+    return (user !== "null") ? true : false;
   }
 }

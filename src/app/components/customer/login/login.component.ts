@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
     private userService: UserServiceService) { }
-
+  
+  userData: any;
   loginForm:any =  FormGroup;
   submitted = false;
   loading = false;
@@ -47,18 +48,23 @@ export class LoginComponent implements OnInit {
          {   
           this.activationError = true;
           this.loading = false;  
+          localStorage.setItem('user', "null");
          }
         
          else
          {
           this.loading = false;
           const user = userCredential.user;
+          this.userData = user;
+          //localStorage.setItem('user', JSON.stringify(this.userData));
+          ///JSON.parse(localStorage.getItem('user'));
           console.log("signed in")
           this.router.navigate(['/menu']);
          } 
         });
     })
     .catch((error) => {
+      localStorage.setItem('user', "null");
       const errorCode = error.code;
       const errorMessage = error.message;
       if(errorCode == "auth/user-not-found")
@@ -82,6 +88,14 @@ export class LoginComponent implements OnInit {
     ,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     password: ['', [Validators.required]],
     });
+  }
+
+
+  SignOut() {
+    auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['customer-login']);
+    })
   }
 
 }

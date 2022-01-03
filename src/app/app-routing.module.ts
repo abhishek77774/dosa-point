@@ -9,6 +9,7 @@ import { LoginComponent } from './components/customer/login/login.component';
 import { MenuComponent } from './components/customer/menu/menu.component';
 import { OrderComponent } from './components/customer/order/order.component';
 import { RegistrationSuccessComponent } from './components/customer/registration-success/registration-success.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 
 const routes: Routes = [
