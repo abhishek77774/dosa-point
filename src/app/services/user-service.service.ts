@@ -70,9 +70,8 @@ export class UserServiceService {
   }
 
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user') as string);
-    console.log("user is :", user)
-    return (user !== "null") ? true : false;
+    const user = localStorage.getItem('user');
+    return (user === null) ? true : false;
   }
 
   
