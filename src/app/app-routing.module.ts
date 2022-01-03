@@ -13,12 +13,19 @@ import { AuthGuard } from './helpers/auth.guard';
 
 
 const routes: Routes = [
-  {
+    {
     path: '',
     component: LoginComponent,
     
-},
-  {
+    },
+  
+   {
+    path: '**',
+    component: LoginComponent,
+  
+   },
+  
+    {
     path: 'admin-login',
     component: AdminLoginComponent},
 
@@ -50,7 +57,8 @@ const routes: Routes = [
 
     {
       path: 'view-orders',
-      component: ViewOrdersComponent
+      component: ViewOrdersComponent,
+      canActivate: [AuthGuard],
     },
 
     {
