@@ -23,8 +23,8 @@ export class UserServiceService {
   constructor(private router: Router) { }
 
   readData:any;
-  menuFromDb:any;
-
+  //menuFromDb:any;
+  menuFromDb : DocumentData[] = [];
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
@@ -74,9 +74,9 @@ export class UserServiceService {
   { 
     
     const getMenuQuery = query(collection(db, "menu"));
-    const querySnapshotforMenu = await getDocs(getMenuQuery);
+    const querySnapshotforMenu =  await getDocs(getMenuQuery);
     querySnapshotforMenu.forEach((doc) => {
-    this.menuFromDb = doc.data();
+    this.menuFromDb.push(doc.data());
     });
     return this.menuFromDb;
   }

@@ -7,7 +7,8 @@
                             <h3 class="p-1 display-6 text-center">Menu</h3>
                             <hr class="bg-danger border-1 border-top border-danger">
                         <div>
-                            <table class="table">
+
+                            <table class="table"> 
                                 <thead>
                                     <tr>
                                     <th>Item</th>
@@ -17,38 +18,17 @@
                                     </tr>      
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                     <td>Dosa</td>
-                                     <td>20</td>
-                                     <td>
-                                         <img src="/assets/minus2.png" (click)="decreaseQuantity(1)" width="18vh" alt="-">
-                                         {{dosaQuantity}}
-                                         <img src="/assets/plus2.png" (click)="increaseQuantity(1)" width="18.5vh" alt="-">
-                                        </td>
-                                     <td>{{dosaQuantity * 20}}</td>   
-                                    </tr>
-                                    <tr>
-                                        <td>Idly</td>
-                                        <td>15</td>
-                                        <td>
-                                            <img src="/assets/minus2.png" (click)="decreaseQuantity(2)" width="18vh" alt="-">
-                                            {{idlyQuantity}}
-                                            <img src="/assets/plus2.png" (click)="increaseQuantity(2)" width="18.5vh" alt="-">
-                                           </td>
-                                        <td>{{idlyQuantity * 15}}</td>
-                                       </tr>
-                                       <tr>
-                                        <td>Bonda</td>
-                                        <td>20</td>
-                                        <td>
-                                            <img src="/assets/minus2.png" (click)="decreaseQuantity(3)" width="18vh" alt="-">
-                                            {{bondaQuantity}}
-                                            <img src="/assets/plus2.png" (click)="increaseQuantity(3)" width="18.5vh" alt="-">
-                                           </td>
-                                        <td>{{bondaQuantity * 20}}</td>   
-                                       </tr>
-                                </tbody>  
-                            </table>
+                                <tr *ngFor="let thing of menuFromDb; let i = index;">
+                                <td>{{thing.itemName}}</td> 
+                                <td>{{thing.price}}</td> 
+                                <td> <img src="/assets/minus2.png" (click)="decreaseQuantity(i, thing.quantity)" width="18vh" alt="-">
+                                    {{thing.quantity}}
+                                    <img src="/assets/plus2.png" (click)="increaseQuantity(i, thing.quantity)" width="18.5vh" alt="-"></td>
+                                <td>{{thing.price * thing.quantity}}</td>
+                                </tr> 
+                            </tbody>  
+                            </table> 
+
                         </div>      
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">Total: {{getFinalAmount()}} Rs. </div>  
