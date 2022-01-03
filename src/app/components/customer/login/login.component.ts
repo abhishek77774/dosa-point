@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
           const user = userCredential.user;
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          ///JSON.parse(localStorage.getItem('user'));
           console.log("signed in")
           this.router.navigate(['/menu']);
          } 
@@ -89,7 +88,5 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
     });
   }
-
-
 
 }

@@ -19,12 +19,6 @@ const routes: Routes = [
     
     },
   
-   {
-    path: '**',
-    component: LoginComponent,
-  
-   },
-  
     {
     path: 'admin-login',
     component: AdminLoginComponent},

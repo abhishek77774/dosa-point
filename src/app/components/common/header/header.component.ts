@@ -10,11 +10,14 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class HeaderComponent implements OnInit {
 
+  currentUser = false;
+
   constructor( private userService: UserServiceService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  
   logout() {
     this.userService.SignOut();
   }
