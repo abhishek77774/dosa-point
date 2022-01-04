@@ -155,4 +155,9 @@ export class UserServiceService {
     })
   }
 
+  clearMenu()
+  {
+    this.menuFromDb.length = 0;
+  }
+
 }

@@ -31,6 +31,7 @@ export class MenuComponent implements OnInit {
    newOrderNumber:number = 0;
 
   ngOnInit() {
+    this.menuFromDb.length = 0;
     this.getMenu();
   }
 
@@ -98,7 +99,7 @@ export class MenuComponent implements OnInit {
       this.order.orderStatus = "Completed";
      
       this.saveOrder(this.order);
-
+      this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber}});
     } 
   }
   }

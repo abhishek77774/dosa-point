@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-order',
@@ -7,11 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
-  constructor() { }
+  orderNumber:any = history.state.newOrderNumber;
 
-  orderNumber:number=0;
-  
+  constructor(private router: Router, private userService: UserServiceService) { }
+
   ngOnInit(): void {
+    console.log("order no. is:", this.orderNumber)
+  }
+
+  goToMenu()
+  {
+    this.userService.clearMenu();
+    this.router.navigate(['menu']);
   }
 
 }
