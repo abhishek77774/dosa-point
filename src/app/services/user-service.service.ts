@@ -27,6 +27,7 @@ export class UserServiceService {
   newOrderId:any;
   menuFromDb : DocumentData[] = [];
   userInfo:any;
+  allUser: DocumentData[] = [];
 
   async writeToUsersCollection(formdata:any)
   {
@@ -114,6 +115,20 @@ export class UserServiceService {
   }
     return this.menuFromDb;  
   }
+
+  async getAllUser()
+  { 
+    if(this.menuFromDb.length <= 0 )
+    {
+    const getUsersQuery = query(collection(db, "users"));
+    const querySnapshotforMenu =  await getDocs(getUsersQuery);
+    querySnapshotforMenu.forEach((doc) => {
+    this.allUser.push(doc.data());  
+    });
+  }
+    return this.allUser;  
+  }
+
 
   async getNewOrderId()
   {

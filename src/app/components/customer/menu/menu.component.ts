@@ -98,6 +98,7 @@ export class MenuComponent implements OnInit {
       this.order.orderStatus = "Completed";
      
       this.saveOrder(this.order);
+
     } 
   }
   }
