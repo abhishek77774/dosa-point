@@ -21,6 +21,8 @@ export class MenuComponent implements OnInit {
     });
    }
 
+   orderedItems = "";
+   totalQuantity = 0; 
    menuFromDb = Array();
    finalAmount:number = 0;
    orderError = false;
@@ -33,7 +35,7 @@ export class MenuComponent implements OnInit {
 
   async getMenu()
   {
-     this.userService.getMenu().then(data=>
+     await this.userService.getMenu().then(data=>
       {
         this.menuFromDb = data;
       });
@@ -44,7 +46,7 @@ export class MenuComponent implements OnInit {
     this.orderError = false;
     this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity + 1;
     this.finalAmount = this.finalAmount + price;
-    
+//    this.orderedItems.add(itemName);
   }
 
 
@@ -54,6 +56,7 @@ export class MenuComponent implements OnInit {
     {
     this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity - 1;
     this.finalAmount = this.finalAmount -  price;  
+    //this.orderedItems.delete(itemName);
   }
   }
 
@@ -69,14 +72,23 @@ export class MenuComponent implements OnInit {
     let isOrderConfirmed = confirm("Total Amount is: "+this.finalAmount +". Confirm the order?");
     if(isOrderConfirmed)
     {
+
+      this.menuFromDb.forEach((value) => {
+        console.log(value.itemName + "-" + value.quantity);
+        
+      });
+
       console.log("ordered items:", this.menuFromDb);
       this.userInfoObject = JSON.parse(localStorage['userInfo']);
       console.log("userInfo isss:", this.userInfoObject);
+      console.log(this.orderedItems)
+      console.log(this.totalQuantity)
+      console.log(this.finalAmount)
       if(this.userInfoObject !== null)
       {
       console.log(this.userInfoObject.mobile)
       console.log(this.userInfoObject.fullName)
-      console.log()
+      
       console.log(this.userInfoObject.fullName)
       console.log(this.userInfoObject.fullName)
       }

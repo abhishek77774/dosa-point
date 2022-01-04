@@ -105,6 +105,8 @@ export class UserServiceService {
   SignOut() {
     auth.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.removeItem('userInfo');
+      this.menuFromDb.length = 0;  
       this.router.navigate(['customer-login']);
     })
   }
