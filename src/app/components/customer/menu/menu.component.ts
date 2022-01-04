@@ -77,11 +77,14 @@ export class MenuComponent implements OnInit {
       this.orderedItems = "";
       this.menuFromDb.forEach((value) => {
         var item = value.itemName + "-" + value.quantity;
+        if(value.quantity>0)
+        {
         if(this.orderedItems.length>0)
         {
           this.orderedItems = this.orderedItems + ", ";
         }
         this.orderedItems = this.orderedItems + item;
+      }
       });
 
       this.userInfoObject = JSON.parse(localStorage['userInfo']);
