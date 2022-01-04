@@ -22,9 +22,9 @@
                                 <tr *ngFor="let thing of menuFromDb; let i = index;">
                                 <td>{{thing.itemName}}</td> 
                                 <td>{{thing.price}}</td> 
-                                <td> <img src="/assets/minus2.png" (click)="decreaseQuantity(i, thing.quantity, thing.price)" width="18vh" alt="-">
+                                <td> <img src="/assets/minus2.png" (click)="decreaseQuantity(i, thing.quantity, thing.price, thing.itemName)" width="18vh" alt="-">
                                     {{thing.quantity}}
-                                    <img src="/assets/plus2.png" (click)="increaseQuantity(i, thing.quantity, thing.price)" width="18.5vh" alt="-"></td>
+                                    <img src="/assets/plus2.png" (click)="increaseQuantity(i, thing.quantity, thing.price, thing.itemName)" width="18.5vh" alt="-"></td>
                                 <td> 
                                   {{thing.price * thing.quantity}}
                                 </td>

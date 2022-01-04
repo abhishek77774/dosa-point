@@ -25,6 +25,8 @@ export class UserServiceService {
   readData:any;
   //menuFromDb:any;
   menuFromDb : DocumentData[] = [];
+  userInfo:any;
+
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
@@ -69,6 +71,17 @@ export class UserServiceService {
     }
      return 0;  
   } 
+
+  async getUserByEmail(email:string)
+  { 
+    const checkAccountQuery = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshotforAccount = await getDocs(checkAccountQuery);
+    querySnapshotforAccount.forEach((doc) => {
+      this.userInfo = doc.data();
+     });
+     return this.userInfo;
+  } 
+
 
    async getMenu()
   { 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmedValidator } from 'src/app/confirmed.validator';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, updatePhoneNumber } from "firebase/auth";
 
 const auth = getAuth();
 
@@ -53,6 +53,9 @@ export class CustomerRegistrationComponent implements OnInit {
          .then((userCredential) => {
         // Sign up 
         this.registerUserForValidation(this.registrationForm);
+        updateProfile(userCredential.user, {
+          displayName: this.registrationForm.value["fullName"]
+        })
         console.log("user created");
         this.router.navigate(['/registration-success']);
       })

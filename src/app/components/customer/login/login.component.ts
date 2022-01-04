@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
      }
   
   userData: any;
+  userInfo:any;
   loginForm:any =  FormGroup;
   submitted = false;
   loading = false;
@@ -63,7 +64,8 @@ export class LoginComponent implements OnInit {
           const user = userCredential.user;
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          console.log("signed in")
+          this.getUserInfo(this.loginForm.value['email']);
+          console.log("signed in");
           this.router.navigate(['/menu']);
          } 
         });
@@ -74,13 +76,11 @@ export class LoginComponent implements OnInit {
       const errorMessage = error.message;
       if(errorCode == "auth/user-not-found")
       {
-        console.log("User:",localStorage.getItem('user'))
         this.notRegisteredError = true;
         this.loading = false;
       }
       else if (errorCode == "auth/wrong-password")
       {
-        console.log("User:",localStorage.getItem('user'))
         this.credentialsError = true;
         this.loading = false;
       }
@@ -96,8 +96,14 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
     });
 
-    
   }
 
-  
+  async getUserInfo(email:string)
+  {
+     await this.userService.getUserByEmail(email).then(data=>
+      {
+        this.userInfo = JSON.stringify(data);
+      });
+      localStorage.setItem('userInfo', this.userInfo);
+  }
 }
