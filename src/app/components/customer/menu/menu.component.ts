@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
     });
    }
 
+   order: OrderModel = new OrderModel();
    orderedItems = "";
    totalQuantity = 0; 
    menuFromDb = Array();
@@ -73,29 +74,26 @@ export class MenuComponent implements OnInit {
     if(isOrderConfirmed)
     {
 
+      this.orderedItems = "";
       this.menuFromDb.forEach((value) => {
-        console.log(value.itemName + "-" + value.quantity);
-        
+        var item = value.itemName + "-" + value.quantity;
+        if(this.orderedItems.length>0)
+        {
+          this.orderedItems = this.orderedItems + ", ";
+        }
+        this.orderedItems = this.orderedItems + item;
       });
 
-      console.log("ordered items:", this.menuFromDb);
       this.userInfoObject = JSON.parse(localStorage['userInfo']);
-      console.log("userInfo isss:", this.userInfoObject);
-      console.log(this.orderedItems)
-      console.log(this.totalQuantity)
-      console.log(this.finalAmount)
-      if(this.userInfoObject !== null)
-      {
-      console.log(this.userInfoObject.mobile)
-      console.log(this.userInfoObject.fullName)
       
-      console.log(this.userInfoObject.fullName)
-      console.log(this.userInfoObject.fullName)
-      }
-      //OrderModel order = new OrderModel()
-     // this.menuFromDb.length = 0;
-     //this.router.navigate(['/menu']);
-     //this.menuFromDb.length = 0;
+      this.order.customerName = this.userInfoObject.fullName;
+      this.order.mobile = this.userInfoObject.mobile;
+      this.order.orderedItems = this.orderedItems;
+      this.order.totalAmount = this.finalAmount;
+      this.order.date = new Date();
+      this.order.status = "Completed";
+
+      console.log("Order is:", this.order);
     } 
   }
   }
