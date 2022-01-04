@@ -92,6 +92,9 @@ firebase/messaging
 
 firebase/remote-config
 
+font-awesome
+(OFL-1.1 AND MIT)
+
 idb
 ISC
 ISC License (ISC)
