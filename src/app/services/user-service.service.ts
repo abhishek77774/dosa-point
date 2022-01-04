@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
-import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData } from "firebase/firestore"
+import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData, FieldValue, serverTimestamp, orderBy, limit } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Router } from '@angular/router';
+import { OrderModel } from '../model/OrderModel';
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyB3EE-fMVGHKpXDC4rs3-jUf1Z7KHEbGYs",
@@ -23,19 +24,37 @@ export class UserServiceService {
   constructor(private router: Router) { }
 
   readData:any;
-  //menuFromDb:any;
+  newOrderId:any;
   menuFromDb : DocumentData[] = [];
   userInfo:any;
 
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
+    
     //return docRef;
   }
 
+  
+  async writeToOrdersCollection(orderData:OrderModel)
+  {
+        const orderConverter = 
+        {
+          orderNumber: orderData.orderNumber,
+          customerName: orderData.customerName,
+          mobile: orderData.mobile,
+          orderItems: orderData.orderedItems,
+          totalAmount : orderData.totalAmount,
+          orderDate: orderData.orderDate,
+          orderStatus : orderData.orderStatus,
+        };
+
+    const docRef = await addDoc(collection(db, "orders"), orderConverter);
+  }
+
+
   async verifyCredentials(loginFormData:any)
   { 
-    
     const checkAccountQuery = query(collection(db, "users"), where("email", "==", loginFormData["email"]), where("activated", "==", true));
     const querySnapshotforAccount = await getDocs(checkAccountQuery);
     
@@ -96,6 +115,16 @@ export class UserServiceService {
     return this.menuFromDb;  
   }
 
+  async getNewOrderId()
+  {
+    const checkAccountQuery = query(collection(db, "orders"), orderBy("orderDate", "desc"), limit(1));
+    const querySnapshotforAccount = await getDocs(checkAccountQuery);
+    querySnapshotforAccount.forEach((doc) => {
+      this.newOrderId = doc.data()["orderNumber"];
+     });
+    return this.newOrderId;
+  }
+
   get isLoggedIn(): boolean {
     const user = localStorage.getItem('user');
     return (user === null) ? true : false;
@@ -110,4 +139,5 @@ export class UserServiceService {
       this.router.navigate(['customer-login']);
     })
   }
+
 }

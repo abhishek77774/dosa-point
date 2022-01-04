@@ -1,10 +1,10 @@
 export class OrderModel
 {
+    orderNumber?: number;
     customerName?: string;
     mobile?: number;
     orderedItems?: string;
     totalAmount?: number;
-    date?: Date;
-    status?: string;
-
+    orderDate?: Date;
+    orderStatus?: string;
 }

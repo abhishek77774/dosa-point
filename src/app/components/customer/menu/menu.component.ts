@@ -23,12 +23,12 @@ export class MenuComponent implements OnInit {
 
    order: OrderModel = new OrderModel();
    orderedItems = "";
-   totalQuantity = 0; 
    menuFromDb = Array();
    finalAmount:number = 0;
    orderError = false;
    userInfoObject:any;
    foodItemIndex = [];
+   newOrderNumber:number = 0;
 
   ngOnInit() {
     this.getMenu();
@@ -47,8 +47,7 @@ export class MenuComponent implements OnInit {
     this.orderError = false;
     this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity + 1;
     this.finalAmount = this.finalAmount + price;
-//    this.orderedItems.add(itemName);
-  }
+ }
 
 
   decreaseQuantity(itemNumber:number, quantity:number, price:number, itemName:string)
@@ -57,12 +56,11 @@ export class MenuComponent implements OnInit {
     {
     this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity - 1;
     this.finalAmount = this.finalAmount -  price;  
-    //this.orderedItems.delete(itemName);
   }
   }
 
-  
-  orderConfirmation()
+  //processing order 
+  async orderConfirmation()
   {
     if(this.finalAmount<=0)
     {
@@ -71,9 +69,10 @@ export class MenuComponent implements OnInit {
     else
     {
     let isOrderConfirmed = confirm("Total Amount is: "+this.finalAmount +". Confirm the order?");
+   
     if(isOrderConfirmed)
     {
-
+      await this.getNewOrderId();
       this.orderedItems = "";
       this.menuFromDb.forEach((value) => {
         var item = value.itemName + "-" + value.quantity;
@@ -89,15 +88,38 @@ export class MenuComponent implements OnInit {
 
       this.userInfoObject = JSON.parse(localStorage['userInfo']);
       
+      //building order object
+      this.order.orderNumber = this.newOrderNumber;
       this.order.customerName = this.userInfoObject.fullName;
       this.order.mobile = this.userInfoObject.mobile;
       this.order.orderedItems = this.orderedItems;
       this.order.totalAmount = this.finalAmount;
-      this.order.date = new Date();
-      this.order.status = "Completed";
-
-      console.log("Order is:", this.order);
+      this.order.orderDate = new Date();
+      this.order.orderStatus = "Completed";
+     
+      this.saveOrder(this.order);
     } 
   }
   }
+
+    //generate new orderNumber
+    async getNewOrderId()
+    {
+      await this.userService.getNewOrderId().then(data=>
+        {
+          this.newOrderNumber = data+1;
+        });
+        return this.newOrderNumber;
+    }
+
+  //method saves order in DB
+  async saveOrder(orderData:OrderModel)
+  {
+    await this.userService.writeToOrdersCollection(orderData).then(data=>
+      {
+        console.log("Order is saved:")
+      });
+  }
+
+
 }
