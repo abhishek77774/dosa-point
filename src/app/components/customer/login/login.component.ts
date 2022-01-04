@@ -18,13 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
     private userService: UserServiceService) {
-      router.events.forEach((event) => {
-        if(event instanceof NavigationStart) {
-          if (event.navigationTrigger === 'popstate') {
-            console.log("back pressed");
-          }
-        }
-      });
+     
       
      }
   
@@ -101,6 +95,8 @@ export class LoginComponent implements OnInit {
     ,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     password: ['', [Validators.required]],
     });
+
+    
   }
 
   

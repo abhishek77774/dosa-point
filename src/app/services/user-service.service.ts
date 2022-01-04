@@ -68,17 +68,19 @@ export class UserServiceService {
       return 1;
     }
      return 0;  
-  }
+  } 
 
-  async getMenu()
+   async getMenu()
   { 
-    
+    if(this.menuFromDb.length <= 0 )
+    {
     const getMenuQuery = query(collection(db, "menu"));
     const querySnapshotforMenu =  await getDocs(getMenuQuery);
     querySnapshotforMenu.forEach((doc) => {
-    this.menuFromDb.push(doc.data());
+     this.menuFromDb.push(doc.data());  
     });
-    return this.menuFromDb;
+  }
+    return this.menuFromDb;  
   }
 
   get isLoggedIn(): boolean {
