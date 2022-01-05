@@ -1,29 +1,38 @@
 <div class="container-fluid">
-    <div class="col-md-12 bg-light">
-        <div class="d-flex align-items-center py-1">
+    <div class="col-sm-12 bg-light">
+        <div class="viewUsersFrame d-flex py-2">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 col-xl-12 col-md-12 mx-auto">
-                        <h3 class="p-1 display-6 text-center">Users</h3>
+                    <div class="col-sm-12 mx-auto">
+                        <h3 class="p-1 display-6 text-center">Verify New Users</h3>
+                        <div class="d-flex justify-content-center">
+                        <span class="note">(Please click on verify to allow Login)</span>
+                        </div>
                         <hr class="bg-danger border-1 border-top border-danger">
-                    <div>
-                        <table class="table">
+                    <div class="fixWidthForDevices">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            
+                        <table class="table"  *ngIf="newUsers.length>0"> 
                             <thead>
                                 <tr>
                                 <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th></th>
                                 </tr>      
                             </thead>
                             <tbody>
-                                <tr>
-                                 <td>Dinesh</td>
-                                </tr>
-                            </tbody>  
-                        </table>
-                    </div>      
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                        <div class="p-2 bd-highlight">Total Users:  </div>  
-                    </div>
-                    </div>
+                            <tr *ngFor="let thing of newUsers; let i = index;">
+                            <td>{{thing.fullName}}</td> 
+                            <td>{{thing.mobile}}</td>
+                            <td>{{thing.email}}</td>  
+                               <td>
+                                <button *ngIf="newUsers.length>0" class="pull-right btn btn-danger btn-sm" (click)="verifyUser(i)">Verify</button>
+                               </td>                             
+                            </tr> 
+                        </tbody>  
+                        </table> 
+                    </div>   
                 </div>
             </div>
         </div>

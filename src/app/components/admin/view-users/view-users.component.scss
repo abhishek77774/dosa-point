@@ -1,0 +1,23 @@
+.viewUsersFrame {
+    min-height: 84vh;
+  }
+  
+  .invalid-feedback
+  {
+    margin-left: 25px;
+  }
+
+  .fixWidthForDevices
+  {
+    overflow-x: hidden;
+  }
+
+  table{
+    table-layout:fixed;
+  }
+
+  table td{ 
+    vertical-align: top; 
+    padding: 5px;
+    word-break: break-all;  /* MUST ADD THIS */
+  }

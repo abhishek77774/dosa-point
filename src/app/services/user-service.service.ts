@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
-import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData, FieldValue, serverTimestamp, orderBy, limit, deleteDoc, doc } from "firebase/firestore"
+import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData, FieldValue, serverTimestamp, orderBy, limit, deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Router } from '@angular/router';
 import { OrderModel } from '../model/OrderModel';
@@ -28,7 +28,8 @@ export class UserServiceService {
   menuFromDb : DocumentData[] = [];
   oldMenuForUpdation : DocumentData[] = [];
   userInfo:any;
-  allUser: DocumentData[] = [];
+  allUsers: DocumentData[] = [];
+  newUsers: DocumentData[] = [];
 
   async writeToUsersCollection(formdata:any)
   {
@@ -127,17 +128,44 @@ export class UserServiceService {
     });
   }
 
-  async getAllUser()
+  async getAllUsers()
   { 
     if(this.menuFromDb.length <= 0 )
     {
     const getUsersQuery = query(collection(db, "users"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
-    this.allUser.push(doc.data());  
+    this.allUsers.push(doc.data());  
     });
   }
-    return this.allUser;  
+    return this.allUsers;  
+  }
+
+  async getNewUsers()
+  { 
+    if(this.menuFromDb.length <= 0 )
+    {
+    const getUsersQuery = query(collection(db, "users"), where("activated", "==", false));
+    const querySnapshotforMenu =  await getDocs(getUsersQuery);
+    querySnapshotforMenu.forEach((doc) => {
+    this.newUsers.push(doc.data());  
+    });
+  }
+    return this.newUsers;  
+  }
+
+  async verifyUser(mobile:number)
+  { 
+    
+    const getUsersQuery = query(collection(db, "users"), where("mobile", "==", mobile));
+    const querySnapshotforMenu =  await getDocs(getUsersQuery);
+    querySnapshotforMenu.forEach(async (user) => {
+      const docRef = doc(db, 'users', user.id);
+      await updateDoc(docRef, {
+        activated: true
+      });
+    });
+    return true;  
   }
 
   async getNewOrderId()

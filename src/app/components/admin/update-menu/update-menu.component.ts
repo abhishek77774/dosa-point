@@ -34,7 +34,7 @@ export class UpdateMenuComponent implements OnInit {
   updateItemName(id: number, property: any, event: any) {
     const editField = event.target.textContent;
     this.menuFromDb[id][property] = editField;
-    console.log("updated itemName:", this.menuFromDb[id][property])
+    //console.log("updated itemName:", this.menuFromDb[id][property])
   }
 
   changeItemName(id: number, property: any, event: any) {

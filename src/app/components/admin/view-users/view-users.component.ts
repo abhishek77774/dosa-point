@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-view-users',
@@ -7,9 +10,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewUsersComponent implements OnInit {
 
-  constructor() { }
+  newUsers = Array();
+  loading = false;
 
-  ngOnInit(): void {
+  constructor(private userService: UserServiceService, private toastr: ToastrService,
+    private router: Router) { }
+
+  async ngOnInit(): Promise<void> {
+    this.newUsers.length = 0;
+     await this.getNewUsers();
+     this.loading = false;
+     console.log("new Users:", this.newUsers)
+  }
+
+  async getNewUsers()
+  {
+    this.loading = true;
+     await this.userService.getNewUsers().then(data=>
+      {
+        this.newUsers = data;
+      });
+  }
+
+  verifyUser(i: number)
+  {
+    this.userService.verifyUser(this.newUsers[i].mobile).then(data=>
+      {
+      });
+      this.toastr.success('User Verified');
+      this.ngOnInit();
+      this.router.navigate(['view-users']);
   }
 
 }

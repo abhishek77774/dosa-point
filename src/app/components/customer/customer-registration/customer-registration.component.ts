@@ -57,7 +57,7 @@ export class CustomerRegistrationComponent implements OnInit {
           displayName: this.registrationForm.value["fullName"]
         })
         console.log("user created");
-        this.router.navigate(['/registration-success']);
+        this.router.navigate(['registration-success']);
       })
       .catch((error) => {
         const errorCode = error.code;
