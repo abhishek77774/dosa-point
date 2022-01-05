@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/customer/login/login.component';
@@ -20,6 +20,8 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { UpdateMenuComponent } from './components/admin/update-menu/update-menu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,15 @@ import { UpdateMenuComponent } from './components/admin/update-menu/update-menu.
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 1800,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+      }
+    ),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())

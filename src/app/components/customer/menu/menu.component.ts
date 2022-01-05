@@ -99,7 +99,8 @@ export class MenuComponent implements OnInit {
       this.order.orderStatus = "Completed";
      
       this.saveOrder(this.order);
-      this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber}});
+      this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber,
+        totalAmount:this.finalAmount}});
     } 
   }
   }

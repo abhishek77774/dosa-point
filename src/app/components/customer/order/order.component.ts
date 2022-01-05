@@ -10,6 +10,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class OrderComponent implements OnInit {
 
   orderNumber:any = history.state.newOrderNumber;
+  totalAmount:any = history.state.totalAmount;;
 
   constructor(private router: Router, private userService: UserServiceService) { }
 

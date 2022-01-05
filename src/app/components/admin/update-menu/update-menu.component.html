@@ -22,7 +22,7 @@
                             <tbody>
                             <tr *ngFor="let thing of menuFromDb; let i = index;">
                             <td contenteditable="true" (keyup)="changeValue(i, 'itemName', $event)" (blur)="updateList(i, 'itemName', $event)">{{thing.itemName}}</td> 
-                            <td contenteditable="true" (keyup)="changeValue(i, 'price', $event)" (blur)="updateList(i, 'price', $event)">{{thing.price}}
+                            <td contenteditable="true" (keyup)="changePrice(i, 'price', $event)" (blur)="updatePrice(i, 'price', $event)">{{thing.price}}
                                </td>
                                <td>
                                 <button *ngIf="menuFromDb.length>0" class="pull-right btn btn-danger btn-sm" (click)="deleteExistingItem(i)">Delete This</button>
