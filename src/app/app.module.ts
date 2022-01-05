@@ -19,6 +19,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { UpdateMenuComponent } from './components/admin/update-menu/update-menu.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     RegistrationSuccessComponent,
     AdminHomeComponent,
     ViewUsersComponent,
-    ViewOrdersComponent
+    ViewOrdersComponent,
+    UpdateMenuComponent
   ],
   imports: [
     BrowserModule,

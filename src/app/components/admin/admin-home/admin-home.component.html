@@ -4,39 +4,43 @@
                <div class="container">
                    <div class="row">
                        <div class="col-lg-8 col-xl-7 mx-auto">
-                           <h3 class="p-3 display-6 text-center">Welcome Admin</h3>
+                           <h3 class="p-2 display-6 text-center">Welcome Admin</h3>
                            <hr>                 
                        </div>
-                       <div class="p-4 d-flex justify-content-center">
+
+                       <div class="p-3 d-flex justify-content-center">
+                        <button (click)="goToUpdateMenu()" class="btn btn-primary btn-block text-uppercase rounded-pill shadow-sm">Update Menu
+                        </button>
+                    </div>
+                    
+                       <div class="p-3 d-flex justify-content-center">
                            <button (click)="goToVerifyUsersCom()" class="btn btn-primary btn-block text-uppercase rounded-pill shadow-sm">Verify New Users
                            </button>
                        </div>
                        
-                       <div class="p-4 d-flex justify-content-center">
+                       <div class="p-3 d-flex justify-content-center">
                            <button (click)="goToUsersCom()" class="btn btn-primary btn-block text-uppercase rounded-pill shadow-sm">View Verified Users
                            </button>
                        </div>
                        
-                       <div class="p-4 d-flex justify-content-center">
+                       <div class="p-3 d-flex justify-content-center">
                            <button (click)="goToOrdersCom()" class="btn btn-primary btn-block text-uppercase rounded-pill shadow-sm">View Today's Orders
-                           </button>
-                           
+                           </button>                        
                        </div>
                        <hr>
-                       <div class="p-1 d-flex justify-content-center">
+                       <div class="p-2 d-flex justify-content-center">
                            <form [formGroup]="orderDetailsForm" (ngSubmit)="onSubmit()">
                                <div class="form-group mb-3">
                                    <div class="form-group mb-3">
-                                   <input id="orderDateSelector" type="date" formControlName="orderDateSelector" [ngClass]="{ 'is-invalid': submitted && f.orderDateSelector.errors }" placeholder="Select a date" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-                                       <div *ngIf="submitted && f.orderDateSelector.errors" class="invalid-feedback">
+                                   <input id="orderDateSelector" type="date" formControlName="orderDateSelector" [ngClass]="{ 'is-invalid': submitted && f.orderDateSelector.errors }" placeholder="Select a date" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"> 
+                                   <div *ngIf="submitted && f.orderDateSelector.errors" class="invalid-feedback">
                                            <div *ngIf="f.orderDateSelector.errors.required">Date is required</div>
-                                       </div>
-                                       <div *ngIf="dateError">Please select a valid date.</div>                                   
-                                      
+                                       </div>                                       
+                                       <div *ngIf="dateError">Please select a valid date.</div>                                                                         
                                    </div>                                 
                                </div>
-                               <div class="p-4 d-flex justify-content-center">
-                               <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">View Orders                    
+                               <div class="p-2 d-flex justify-content-center">                    
+                               <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">View Orders
                                </button>
                                </div>
                            </form>

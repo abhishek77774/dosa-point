@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
+import { UpdateMenuComponent } from './components/admin/update-menu/update-menu.component';
 import { ViewOrdersComponent } from './components/admin/view-orders/view-orders.component';
 import { ViewUsersComponent } from './components/admin/view-users/view-users.component';
 import { CustomerRegistrationComponent } from './components/customer/customer-registration/customer-registration.component';
@@ -48,6 +49,12 @@ const routes: Routes = [
     {
       path: 'admin-home',
       component: AdminHomeComponent,
+      canActivate: [AuthGuard],
+    },
+
+    {
+      path: 'update-menu',
+      component: UpdateMenuComponent,
       canActivate: [AuthGuard],
     },
 

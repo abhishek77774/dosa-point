@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app"
-import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData, FieldValue, serverTimestamp, orderBy, limit } from "firebase/firestore"
+import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firestore, DocumentData, FieldValue, serverTimestamp, orderBy, limit, deleteDoc, doc } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Router } from '@angular/router';
 import { OrderModel } from '../model/OrderModel';
@@ -26,6 +26,7 @@ export class UserServiceService {
   readData:any;
   newOrderId:any;
   menuFromDb : DocumentData[] = [];
+  oldMenuForUpdation : DocumentData[] = [];
   userInfo:any;
   allUser: DocumentData[] = [];
 
@@ -116,6 +117,16 @@ export class UserServiceService {
     return this.menuFromDb;  
   }
 
+  
+  async clearMenuBeforeUpdation()
+  { 
+    const getMenuQuery = query(collection(db, "menu"));
+    const querySnapshotforMenu =  await getDocs(getMenuQuery);
+    querySnapshotforMenu.forEach(async (docItem) => {
+     await deleteDoc(doc(db, "menu", docItem.id));
+    });
+  }
+
   async getAllUser()
   { 
     if(this.menuFromDb.length <= 0 )
@@ -128,7 +139,6 @@ export class UserServiceService {
   }
     return this.allUser;  
   }
-
 
   async getNewOrderId()
   {
@@ -153,6 +163,20 @@ export class UserServiceService {
       this.menuFromDb.length = 0;  
       this.router.navigate(['customer-login']);
     })
+  }
+
+  async updateMenuCollection(newMenuData:any)
+  {
+
+    await this.clearMenuBeforeUpdation();
+    console.log("Old Menu Cleard:")
+    
+    newMenuData.forEach(async (value: any) => {
+      const docRef = await addDoc(collection(db, "menu"), value);
+    });
+    
+    console.log("menu updated")
+    
   }
 
   clearMenu()

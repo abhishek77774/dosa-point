@@ -38,7 +38,6 @@ export class AdminHomeComponent implements OnInit {
      this.dateError=false;
     this.router.navigate(['/view-orders']);
     }
-  
   }
 
   ngOnInit(): void {
@@ -50,17 +49,21 @@ export class AdminHomeComponent implements OnInit {
 
   goToVerifyUsersCom()
   {
-    this.router.navigate(['/view-users']);
+    this.router.navigate(['view-users']);
   }
 
   goToUsersCom()
   {
-    this.router.navigate(['/view-users']);
+    this.router.navigate(['view-users']);
   }
 
   goToOrdersCom()
   {
-    this.router.navigate(['/view-orders']);
+    this.router.navigate(['view-orders']);
   }
 
+  goToUpdateMenu()
+  {
+    this.router.navigate(['update-menu']);
+  }
 }
