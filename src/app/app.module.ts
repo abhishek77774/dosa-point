@@ -21,6 +21,8 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { UpdateMenuComponent } from './components/admin/update-menu/update-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewDateOrdersComponent } from './components/admin/view-date-orders/view-date-orders.component';
+import { ViewAllUsersComponent } from './components/admin/view-all-users/view-all-users.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminHomeComponent,
     ViewUsersComponent,
     ViewOrdersComponent,
-    UpdateMenuComponent
+    UpdateMenuComponent,
+    ViewDateOrdersComponent,
+    ViewAllUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,7 @@ export class AdminHomeComponent implements OnInit {
     if(this.submitted)
     {
      this.dateError=false;
-    this.router.navigate(['/view-orders']);
+     this.router.navigate(['view-date-orders']);
     }
   }
 
@@ -54,10 +54,10 @@ export class AdminHomeComponent implements OnInit {
 
   goToUsersCom()
   {
-    this.router.navigate(['view-users']);
+    this.router.navigate(['view-all-users']);
   }
 
-  goToOrdersCom()
+  goToTodaysOrdersCom()
   {
     this.router.navigate(['view-orders']);
   }
@@ -66,4 +66,5 @@ export class AdminHomeComponent implements OnInit {
   {
     this.router.navigate(['update-menu']);
   }
+
 }

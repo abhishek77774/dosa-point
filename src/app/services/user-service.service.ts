@@ -30,6 +30,7 @@ export class UserServiceService {
   userInfo:any;
   allUsers: DocumentData[] = [];
   newUsers: DocumentData[] = [];
+  ordersData: DocumentData[] = [];
 
   async writeToUsersCollection(formdata:any)
   {
@@ -130,33 +131,26 @@ export class UserServiceService {
 
   async getAllUsers()
   { 
-    if(this.menuFromDb.length <= 0 )
-    {
     const getUsersQuery = query(collection(db, "users"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
     this.allUsers.push(doc.data());  
     });
-  }
     return this.allUsers;  
   }
 
   async getNewUsers()
   { 
-    if(this.menuFromDb.length <= 0 )
-    {
     const getUsersQuery = query(collection(db, "users"), where("activated", "==", false));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
     this.newUsers.push(doc.data());  
     });
-  }
     return this.newUsers;  
   }
 
   async verifyUser(mobile:number)
   { 
-    
     const getUsersQuery = query(collection(db, "users"), where("mobile", "==", mobile));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach(async (user) => {
@@ -167,6 +161,35 @@ export class UserServiceService {
     });
     return true;  
   }
+
+  
+  async deactivateUser(mobile:number)
+  { 
+    const getUsersQuery = query(collection(db, "users"), where("mobile", "==", mobile));
+    const querySnapshotforMenu =  await getDocs(getUsersQuery);
+    querySnapshotforMenu.forEach(async (user) => {
+      const docRef = doc(db, 'users', user.id);
+      await updateDoc(docRef, {
+        activated: false
+      });
+    });
+    return true;  
+  }
+
+  async getOrders(orderDate:string)
+  { 
+    console.log("date is:", orderDate)
+    if(this.ordersData.length <= 0 )
+    {
+    const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", orderDate));
+    const querySnapshotforOrders =  await getDocs(getOrdersQuery);
+    querySnapshotforOrders.forEach((doc) => {
+     this.ordersData.push(doc.data());  
+    });
+  }
+    return this.ordersData;  
+  }
+
 
   async getNewOrderId()
   {

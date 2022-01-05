@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
-  selector: 'app-view-orders',
-  templateUrl: './view-orders.component.html',
-  styleUrls: ['./view-orders.component.scss']
+  selector: 'app-view-date-orders',
+  templateUrl: './view-date-orders.component.html',
+  styleUrls: ['./view-date-orders.component.scss']
 })
-export class ViewOrdersComponent implements OnInit {
+export class ViewDateOrdersComponent implements OnInit {
 
   ordersData = Array();
   loading = false;
@@ -28,5 +28,4 @@ export class ViewOrdersComponent implements OnInit {
      await this.getOrders();
      this.loading = false;
   }
-
 }

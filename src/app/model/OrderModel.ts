@@ -5,6 +5,6 @@ export class OrderModel
     mobile?: number;
     orderedItems?: string;
     totalAmount?: number;
-    orderDate?: Date;
+    orderDate?: string;
     orderStatus?: string;
 }

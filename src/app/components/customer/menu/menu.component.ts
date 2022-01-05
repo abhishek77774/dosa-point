@@ -3,15 +3,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { NavigationStart } from '@angular/router';
 import { OrderModel } from 'src/app/model/OrderModel';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  providers: [DatePipe]
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router, private userService: UserServiceService) {
+  constructor(private router: Router, private userService: UserServiceService,
+    private datePipe: DatePipe) {
     router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
@@ -95,8 +98,8 @@ export class MenuComponent implements OnInit {
       this.order.mobile = this.userInfoObject.mobile;
       this.order.orderedItems = this.orderedItems;
       this.order.totalAmount = this.finalAmount;
-      this.order.orderDate = new Date();
-      this.order.orderStatus = "Completed";
+      this.order.orderDate = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+      this.order.orderStatus = "Done";
      
       this.saveOrder(this.order);
       this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber,

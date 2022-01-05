@@ -1,31 +1,34 @@
 <div class="container-fluid">
     <div class="col-sm-12 bg-light">
-        <div class="viewOrdersFrame d-flex py-2">
+        <div class="viewUsersFrame d-flex py-2">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 mx-auto">
-                        <h3 class="p-1 display-6 text-center">Orders</h3>
+                        <h3 class="p-1 display-6 text-center">All Users</h3>
                         <div class="d-flex justify-content-center">
+                        <span class="note">(Please click on deactivate to deny Login)</span>
                         </div>
                         <hr class="bg-danger border-1 border-top border-danger">
                     <div class="fixWidthForDevices">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             
-                        <table class="table"  *ngIf="ordersData.length>0"> 
+                        <table class="table"  *ngIf="allUsers.length>0"> 
                             <thead>
                                 <tr>
                                 <th>Name</th>
                                 <th>Mobile</th>
-                                <th>Amount</th>
-                                <th>Status</th>
+                                <th>Email</th>
+                                <th></th>
                                 </tr>      
                             </thead>
                             <tbody>
-                            <tr *ngFor="let thing of ordersData; let i = index;">
-                            <td>{{thing.customerName}}</td> 
+                            <tr *ngFor="let thing of allUsers; let i = index;">
+                            <td>{{thing.fullName}}</td> 
                             <td>{{thing.mobile}}</td>
-                            <td>{{thing.totalAmount}}</td>  
-                            <td>{{thing.orderStatus}}</td>      
+                            <td>{{thing.email}}</td>  
+                               <td>
+                                <button *ngIf="allUsers.length>0" class="pull-right btn btn-danger btn-sm" (click)="deactivateUser(i)">Deactivate</button>
+                               </td>                             
                             </tr> 
                         </tbody>  
                         </table> 
