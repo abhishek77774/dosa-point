@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class UpdateMenuComponent implements OnInit {
 
   menuFromDb = Array();
-  editField: any;
+  editField = "";
   editPrice = 0;
 
   constructor(private router: Router, private userService: UserServiceService,
@@ -30,15 +30,18 @@ export class UpdateMenuComponent implements OnInit {
       });
   }
 
-  updateList(id: number, property: any, event: any) {
+  // update itemName
+  updateItemName(id: number, property: any, event: any) {
     const editField = event.target.textContent;
     this.menuFromDb[id][property] = editField;
+    console.log("updated itemName:", this.menuFromDb[id][property])
   }
 
-  changeValue(id: number, property: any, event: any) {
+  changeItemName(id: number, property: any, event: any) {
     this.editField = event.target.textContent;
   }
 
+  // update price
   updatePrice(id: number, property: any, event: any) {
     const editPrice = event.target.textContent;
     this.menuFromDb[id][property] = +editPrice;
