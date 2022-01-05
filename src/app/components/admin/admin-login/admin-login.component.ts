@@ -52,9 +52,10 @@ export class AdminLoginComponent implements OnInit {
          else
          {
           this.loading = false;
-          const user = userCredential.user;
-          console.log("signed in")
-          this.router.navigate(['/admin-home']);
+          const userData = userCredential.user;
+          localStorage.setItem('user', JSON.stringify(userData));
+          console.log("signed in, redirecting->")
+          this.router.navigate(['admin-home']);
          } 
         });
     })

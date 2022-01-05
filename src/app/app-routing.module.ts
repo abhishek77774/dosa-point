@@ -20,7 +20,8 @@ const routes: Routes = [
 
     {
     path: 'admin-login',
-    component: AdminLoginComponent},
+    component: AdminLoginComponent
+    },
 
     {
       path: 'customer-login',
@@ -48,7 +49,6 @@ const routes: Routes = [
       path: 'admin-home',
       component: AdminHomeComponent,
       canActivate: [AuthGuard],
-      
     },
 
     {

@@ -13,14 +13,10 @@ const auth = getAuth();
   styleUrls: ['./login.component.scss']
 })
 
-
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
-    private userService: UserServiceService) {
-     
-      
-     }
+    private userService: UserServiceService) {}
   
   userData: any;
   userInfo:any;
