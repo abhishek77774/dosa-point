@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmedValidator } from 'src/app/confirmed.validator';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, updatePhoneNumber } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, updatePhoneNumber, updatePassword } from "firebase/auth";
 import { ToastrService } from 'ngx-toastr';
 
 const auth = getAuth();
@@ -33,7 +33,7 @@ export class UpdateProfileComponent implements OnInit {
       if(this.submitted)
       {
         //this.loading = true;
-       
+        //password change logic here
       }
     }
       
@@ -48,3 +48,11 @@ export class UpdateProfileComponent implements OnInit {
   }
 
 }
+function getASecureRandomPassword() {
+  throw new Error('Function not implemented.');
+}
+
+function updateEmailOrPassword() {
+  throw new Error('Function not implemented.');
+}
+

@@ -248,11 +248,18 @@ export class UserServiceService {
     const user = localStorage.getItem('user');
     return user;
   }
+
+  get getLoggedInUserCredentials(): any {
+    const user = localStorage.getItem('userCredentials');
+    return user;
+  }
+  
   
   SignOut() {
     auth.signOut().then(() => {
       localStorage.removeItem('user');
       localStorage.removeItem('userInfo');
+      localStorage.removeItem('userCredentials');
       this.menuFromDb.length = 0;  
       this.router.navigate(['customer-login']);
     })

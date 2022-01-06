@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
           const user = userCredential.user;
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
+          localStorage.setItem('userCredentials', JSON.stringify(userCredential));
           this.getUserInfo(this.loginForm.value['email']);
           console.log("signed in");
           this.router.navigate(['/menu']);
