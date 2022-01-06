@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-12 bg-light">
+            <div class="updateFrame d-flex py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-xl-8 mx-auto">
+                            <h3 class="p-3 display-6 text-center">Change Password</h3>
+                            
+                            <div class="p-4">
+                            <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()">
+                                <div class="form-group mb-3">
+                                    <input id="inputPassword" type="password" minlength="6" maxlength="10" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                        <div *ngIf="f.password.errors.required">Password is required</div>
+                                        <div *ngIf="f.password.errors.minlength">Password should be minimum 6 characters</div>
+                                     </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <input id="confirmPassword" type="password" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" placeholder="Confirm Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                        <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                        <div *ngIf="f.confirmPassword.errors.confirmedValidator">Password and Confirm Password must be same.</div>
+                                     </div>
+                                </div>
+                                
+                                <div class="p-3">
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Submit
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                </button>
+                            </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

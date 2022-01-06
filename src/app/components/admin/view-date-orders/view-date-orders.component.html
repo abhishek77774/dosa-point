@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="col-sm-12 bg-light">
+        <div class="viewDateOrdersFrame d-flex py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 mx-auto">
+                        <h3 class="p-1 display-6 text-center">Orders</h3>
+                        <hr class="bg-danger border-1 border-top border-danger">
+                        <div class="d-flex bd-highlight mb-3">
+                            <div *ngIf="ordersData.length>0" class="p-2 bd-highlight text-primary fw-bold">Given Date: {{currentSale}} Rs.</div>
+                            <div *ngIf="ordersData.length>0" class="ms-auto p-2 bd-highlight text-success fw-bold">Till Now: {{totalSale}} Rs.</div>
+                          </div>
+                    <div class="fixWidthForDevices">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        <div *ngIf="noOrdersError">No orders found for the given date.</div> 
+                        <table class="table table-bordered"  *ngIf="ordersData.length>0"> 
+                            <thead>
+                                <tr>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                </tr>      
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let thing of ordersData; let i = index;">
+                            <td>{{thing.customerName}}</td> 
+                            <td>{{thing.mobile}}</td>
+                            <td>{{thing.totalAmount}}</td>  
+                            <td>{{thing.orderStatus}}</td>      
+                            </tr> 
+                        </tbody>  
+                        </table> 
+                    </div>   
+                    <div class="p-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,93 +1,70 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service.service';
+import { NavigationStart } from '@angular/router';
+import { OrderModel } from 'src/app/model/OrderModel';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  providers: [DatePipe]
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
-
-  quantity:number = 0;
-  dosaQuantity:number = 0;
-  idlyQuantity:number = 0;
-  bondaQuantity:number = 0;
-  dosaAmount:number = 0;
-  idlyAmount:number = 0;
-  bondaAmount:number = 0;
-  finalAmount:number = 0;
-  orderError = false;
-
-  ngOnInit(): void {
-  }
-
-  increaseQuantity(itemNumber:number)
-  {
-    switch(itemNumber)
-    {
-      case 1:
-      this.dosaQuantity = this.dosaQuantity+1;
-      this.dosaAmount = this.dosaQuantity * 20;
-      this.finalAmount = this.finalAmount + this.dosaAmount;
-      this.orderError = false;
-      break;
-      case 2:
-      this.idlyQuantity = this.idlyQuantity+1;
-      this.idlyAmount = this.idlyQuantity * 15;
-      this.finalAmount = this.finalAmount + this.idlyAmount;
-      this.orderError = false;
-      break;
-      case 3:
-      this.bondaQuantity = this.bondaQuantity+1;
-      this.bondaAmount = this.bondaQuantity * 20;
-      this.finalAmount = this.finalAmount + this.bondaAmount;
-      this.orderError = false;
-      break;
-      default:
-        break;
-    }
-  }
-
-
-  decreaseQuantity(itemNumber:number)
-  {
-    switch(itemNumber)
-    {
-      case 1:
-        if(this.dosaQuantity>0)
-        {
-      this.dosaQuantity = this.dosaQuantity-1;
-      this.dosaAmount = this.dosaQuantity * 20;
+  constructor(private router: Router, private userService: UserServiceService,
+    private datePipe: DatePipe) {
+    router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.menuFromDb.length = 0;
         }
-      break;
-      case 2:
-        if(this.idlyQuantity>0)
-        {
-      this.idlyQuantity = this.idlyQuantity-1;
-      this.idlyAmount = this.idlyQuantity * 15;
-       }
-      break;
-      case 3:
-        if(this.bondaQuantity>0)
-        {
-      this.bondaQuantity = this.bondaQuantity-1;
-      this.bondaAmount = this.bondaQuantity * 20;
-        }
-      break;
-      default:
-        break;
-    }
+      }
+    });
+   }
+
+   order: OrderModel = new OrderModel();
+   orderedItems = "";
+   menuFromDb = Array();
+   finalAmount:number = 0;
+   orderError = false;
+   userInfoObject:any;
+   foodItemIndex = [];
+   newOrderNumber:number = 0;
+
+  ngOnInit() {
+    this.menuFromDb.length = 0;
+    this.getMenu();
   }
 
-  getFinalAmount()
+  async getMenu()
   {
-    this.finalAmount = this.dosaAmount + this.idlyAmount + this.bondaAmount;
-    return this.finalAmount;
+     await this.userService.getMenu().then(data=>
+      {
+        this.menuFromDb = data;
+      });
   }
 
-  orderConfirmation()
+  increaseQuantity(itemNumber:number, quantity:number, price:number, itemName:string)
+  {
+    this.orderError = false;
+    this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity + 1;
+    this.finalAmount = this.finalAmount + price;
+ }
+
+
+  decreaseQuantity(itemNumber:number, quantity:number, price:number, itemName:string)
+  {
+    if(this.menuFromDb[itemNumber].quantity>0)
+    {
+    this.menuFromDb[itemNumber].quantity = this.menuFromDb[itemNumber].quantity - 1;
+    this.finalAmount = this.finalAmount -  price;  
+  }
+  }
+
+  //processing order 
+  async orderConfirmation()
   {
     if(this.finalAmount<=0)
     {
@@ -96,10 +73,69 @@ export class MenuComponent implements OnInit {
     else
     {
     let isOrderConfirmed = confirm("Total Amount is: "+this.finalAmount +". Confirm the order?");
+   
     if(isOrderConfirmed)
     {
-      this.router.navigate(['/order']);
+      await this.getNewOrderId();
+      this.orderedItems = "";
+      this.menuFromDb.forEach((value) => {
+        var item = value.itemName + "-" + value.quantity;
+        if(value.quantity>0)
+        {
+        if(this.orderedItems.length>0)
+        {
+          this.orderedItems = this.orderedItems + ", ";
+        }
+        this.orderedItems = this.orderedItems + item;
+      }
+      });
+
+      this.userInfoObject = JSON.parse(localStorage['userInfo']);
+      
+      //building order object
+      this.order.orderNumber = this.newOrderNumber;
+      this.order.customerName = this.userInfoObject.fullName;
+      this.order.mobile = this.userInfoObject.mobile;
+      this.order.orderedItems = this.orderedItems;
+      this.order.totalAmount = this.finalAmount;
+      this.order.orderDate = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+      this.order.orderStatus = "Done";
+      this.order.email = this.userInfoObject.email;
+     
+      this.saveOrder(this.order);
+      this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber,
+        totalAmount:this.finalAmount}});
     } 
   }
   }
+
+    //generate new orderNumber
+    async getNewOrderId()
+    {
+      await this.userService.getNewOrderId().then(data=>
+        {
+          this.newOrderNumber = data+1;
+        });
+        return this.newOrderNumber;
+    }
+
+  //method saves order in DB
+  async saveOrder(orderData:OrderModel)
+  {
+    await this.userService.writeToOrdersCollection(orderData).then(data=>
+      {
+        console.log("Order is saved:")
+      });
+  }
+
+  goToViewMyOrders()
+  {
+    this.router.navigate(['user-profile']);
+  }
+
+  goToUpdateProfile()
+  {
+    this.router.navigate(['update-profile']);
+  }
+
 }

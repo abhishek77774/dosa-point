@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "dosapointfirebase"
+  },
+  "targets": {
+    "dosapointfirebase": {
+      "hosting": {
+        "dosa-point": [
+          "dosapoint"
+        ]
+      }
+    }
   }
 }
