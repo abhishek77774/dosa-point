@@ -11,6 +11,7 @@ import { CustomerRegistrationComponent } from './components/customer/customer-re
 import { LoginComponent } from './components/customer/login/login.component';
 import { MenuComponent } from './components/customer/menu/menu.component';
 import { OrderComponent } from './components/customer/order/order.component';
+import { UpdateProfileComponent } from './components/customer/update-profile/update-profile.component';
 import { UserProfileComponent } from './components/customer/user-profile/user-profile.component';
 import { AuthGuard } from './helpers/auth.guard';
 
@@ -88,7 +89,14 @@ const routes: Routes = [
       path: 'user-profile',
       component: UserProfileComponent,
       canActivate: [AuthGuard],
+    },
+
+    {
+      path: 'update-profile',
+      component: UpdateProfileComponent,
+      canActivate: [AuthGuard],
     }
+
 
 ];
 

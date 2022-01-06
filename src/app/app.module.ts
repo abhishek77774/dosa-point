@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDateOrdersComponent } from './components/admin/view-date-orders/view-date-orders.component';
 import { ViewAllUsersComponent } from './components/admin/view-all-users/view-all-users.component';
 import { UserProfileComponent } from './components/customer/user-profile/user-profile.component';
+import { UpdateProfileComponent } from './components/customer/update-profile/update-profile.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { UserProfileComponent } from './components/customer/user-profile/user-pr
     UpdateMenuComponent,
     ViewDateOrdersComponent,
     ViewAllUsersComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UpdateProfileComponent
   ],
   imports: [
     BrowserModule,

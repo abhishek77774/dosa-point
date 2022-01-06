@@ -133,4 +133,9 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['user-profile']);
   }
 
+  goToUpdateProfile()
+  {
+    this.router.navigate(['update-profile']);
+  }
+
 }
