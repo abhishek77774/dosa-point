@@ -5,8 +5,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-xl-7 mx-auto">
-                            <h3 class="display-4 text-center">Admin Login</h3>
+                            <h3 class="display-5 text-center">Admin Login</h3>
+                            <div class="p-4">
                             <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()">
+                                
                                 <div class="form-group mb-3">
                                     <input id="email" type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email Id" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
@@ -35,6 +37,7 @@
                                     <div class="p-2 bd-highlight"><a routerLink="/customer-login">Customer Login</a></div>
                                   </div>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>

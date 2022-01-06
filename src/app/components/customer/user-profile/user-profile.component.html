@@ -14,15 +14,15 @@
                         <table class="table"  *ngIf="myOrders.length>0"> 
                             <thead>
                                 <tr>
-                                <th>Date</th>
+                                <th>Order</th>
                                 <th>Items</th>
                                 <th>Amount</th>
-                                <th></th>
+                                <th>Action</th>
                                 </tr>      
                             </thead>
                             <tbody>
                             <tr *ngFor="let thing of myOrders; let i = index;">
-                            <td>{{thing.orderDate}}</td> 
+                            <td>{{thing.orderNumber}}</td> 
                             <td>{{thing.orderItems}}</td>
                             <td>{{thing.totalAmount}}</td>  
                                <td>

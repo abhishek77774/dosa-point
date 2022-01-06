@@ -54,7 +54,6 @@ export class AdminLoginComponent implements OnInit {
           this.loading = false;
           const userData = userCredential.user;
           localStorage.setItem('user', JSON.stringify(userData));
-          console.log("signed in, redirecting->")
           this.router.navigate(['admin-home']);
          } 
         });

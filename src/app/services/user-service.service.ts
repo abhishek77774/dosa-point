@@ -32,6 +32,7 @@ export class UserServiceService {
   newUsers: DocumentData[] = [];
   ordersData: DocumentData[] = [];
   myOrdersData: DocumentData[] = [];
+  totalSale = 0;
 
   async writeToUsersCollection(formdata:any)
   {
@@ -144,7 +145,8 @@ export class UserServiceService {
 
   async getNewUsers()
   { 
-    const getUsersQuery = query(collection(db, "users"), where("activated", "==", false));
+    const getUsersQuery = query(collection(db, "users"), where("activated", "==", false),
+    orderBy("timeStamp", "desc"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
     this.newUsers.push(doc.data());  
@@ -212,6 +214,23 @@ export class UserServiceService {
     console.error(error);
   }
   return this.myOrdersData; 
+  }
+
+  async getTotalSale()
+  { 
+    try
+    {
+    const getOrdersQuery = query(collection(db, "orders"), where("orderStatus", "==", "Done"));
+    const querySnapshotforOrders =  await getDocs(getOrdersQuery);
+    querySnapshotforOrders.forEach((doc) => {
+     this.totalSale = this.totalSale + doc.data()['totalAmount'];  
+    }); 
+  }
+  catch(error)
+  {
+    console.error(error);
+  }
+  return this.totalSale; 
   }
 
   async cancelOrder(email: string, orderNumber: number)

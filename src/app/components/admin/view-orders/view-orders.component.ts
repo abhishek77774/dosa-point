@@ -13,6 +13,8 @@ export class ViewOrdersComponent implements OnInit {
   ordersData = Array();
   loading = false;
   noOrdersError = false;
+  currentSale = 0;
+  totalSale = 0;
 
   constructor(private userService: UserServiceService,
     private router: Router) {
@@ -44,5 +46,28 @@ export class ViewOrdersComponent implements OnInit {
         this.noOrdersError = true;
      }
      this.loading = false;
+     await this.getTotalSale();
+     this.getCurrentSale();
+  }
+
+  getCurrentSale()
+  {
+    this.ordersData.forEach((value)=>{
+      if(value.orderStatus == "Done")
+      {
+      this.currentSale = this.currentSale + value.totalAmount;
+      }
+    });
+    return this.currentSale;
+  }
+
+  async getTotalSale()
+  {
+    await this.userService.getTotalSale().then(data=>
+      {
+        this.totalSale = data;
+      }).catch((error) => {
+        console.error(error);
+      });
   }
 }
