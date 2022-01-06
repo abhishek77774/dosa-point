@@ -100,6 +100,7 @@ export class MenuComponent implements OnInit {
       this.order.totalAmount = this.finalAmount;
       this.order.orderDate = formatDate(new Date(), 'yyyy/MM/dd', 'en');
       this.order.orderStatus = "Done";
+      this.order.email = this.userInfoObject.email;
      
       this.saveOrder(this.order);
       this.router.navigate(['order'], {state: {newOrderNumber:this.newOrderNumber,
@@ -125,6 +126,11 @@ export class MenuComponent implements OnInit {
       {
         console.log("Order is saved:")
       });
+  }
+
+  goToViewMyOrders()
+  {
+    this.router.navigate(['user-profile']);
   }
 
 }

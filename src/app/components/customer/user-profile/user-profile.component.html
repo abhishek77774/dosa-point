@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="col-sm-12 bg-light">
+        <div class="userProfileFrame d-flex py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 mx-auto">
+                        <h3 class="p-1 display-6 text-center">My Orders</h3>
+                        <div class="d-flex justify-content-center">
+                        </div>
+                        <hr class="bg-danger border-1 border-top border-danger">
+                    <div class="fixWidthForDevices">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        <div *ngIf="noOrdersError">You have not placed any order yet.</div> 
+                        <table class="table"  *ngIf="myOrders.length>0"> 
+                            <thead>
+                                <tr>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th></th>
+                                </tr>      
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let thing of myOrders; let i = index;">
+                            <td>{{thing.orderDate}}</td> 
+                            <td>{{thing.orderItems}}</td>
+                            <td>{{thing.totalAmount}}</td>  
+                               <td>
+                                <button *ngIf="myOrders.length>0" class="pull-right btn btn-danger btn-sm" (click)="cancelOrder(i)">Cancel</button>
+                               </td>                             
+                            </tr> 
+                        </tbody>  
+                        </table> 
+                    </div>   
+                    <div class="p-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,4 +7,5 @@ export class OrderModel
     totalAmount?: number;
     orderDate?: string;
     orderStatus?: string;
+    email?: string;
 }

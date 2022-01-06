@@ -31,6 +31,7 @@ export class UserServiceService {
   allUsers: DocumentData[] = [];
   newUsers: DocumentData[] = [];
   ordersData: DocumentData[] = [];
+  myOrdersData: DocumentData[] = [];
 
   async writeToUsersCollection(formdata:any)
   {
@@ -47,6 +48,7 @@ export class UserServiceService {
           orderNumber: orderData.orderNumber,
           customerName: orderData.customerName,
           mobile: orderData.mobile,
+          email: orderData.email,
           orderItems: orderData.orderedItems,
           totalAmount : orderData.totalAmount,
           orderDate: orderData.orderDate,
@@ -181,7 +183,6 @@ export class UserServiceService {
   { 
     try
     {
-      console.log("date is service:", orderDate)
     const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", orderDate));
     const querySnapshotforOrders =  await getDocs(getOrdersQuery);
     querySnapshotforOrders.forEach((doc) => {
@@ -193,6 +194,38 @@ export class UserServiceService {
     console.error(error);
   }
   return this.ordersData; 
+  }
+
+  async getMyOrders(email: string)
+  { 
+    try
+    {
+    const getOrdersQuery = query(collection(db, "orders"), where("email", "==", email),
+    where("orderStatus", "==", "Done"));
+    const querySnapshotforOrders =  await getDocs(getOrdersQuery);
+    querySnapshotforOrders.forEach((doc) => {
+     this.myOrdersData.push(doc.data());  
+    }); 
+  }
+  catch(error)
+  {
+    console.error(error);
+  }
+  return this.myOrdersData; 
+  }
+
+  async cancelOrder(email: string, orderNumber: number)
+  { 
+    const getUsersQuery = query(collection(db, "orders"), where("email", "==", email),
+    where("orderNumber", "==", orderNumber));
+    const querySnapshotforMenu =  await getDocs(getUsersQuery);
+    querySnapshotforMenu.forEach(async (user) => {
+      const docRef = doc(db, 'orders', user.id);
+      await updateDoc(docRef, {
+        orderStatus: "Cancelled"
+      });
+    });
+    return true;  
   }
 
 
@@ -211,6 +244,10 @@ export class UserServiceService {
     return (user === null) ? true : false;
   }
 
+  get getLoggedInUser(): any {
+    const user = localStorage.getItem('user');
+    return user;
+  }
   
   SignOut() {
     auth.signOut().then(() => {
@@ -223,16 +260,11 @@ export class UserServiceService {
 
   async updateMenuCollection(newMenuData:any)
   {
-
     await this.clearMenuBeforeUpdation();
-    console.log("Old Menu Cleard:")
     
     newMenuData.forEach(async (value: any) => {
       const docRef = await addDoc(collection(db, "menu"), value);
-    });
-    
-    console.log("menu updated")
-    
+    }); 
   }
 
   clearMenu()
