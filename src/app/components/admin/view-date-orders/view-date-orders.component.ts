@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
@@ -11,15 +12,31 @@ export class ViewDateOrdersComponent implements OnInit {
 
   ordersData = Array();
   loading = false;
+  orderDate: string = history.state.orderDate;
+  savedDate:any;
+  noOrdersError = false;
 
-  constructor(private userService: UserServiceService) { }
+  constructor(private userService: UserServiceService,
+    private router: Router) { 
+    router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.ordersData.length = 0;
+        }
+      }
+    });
+
+    localStorage.setItem('orderDate', this.orderDate);
+  }
 
   async getOrders()
   {
     this.loading = true;
-     await this.userService.getOrders(formatDate(new Date(), 'yyyy/MM/dd', 'en')).then(data=>
+     await this.userService.getOrders(localStorage.getItem('orderDate') as string).then(data=>
       {
         this.ordersData = data;
+      }).catch((error) => {
+        console.error(error);
       });
   }
 
@@ -27,5 +44,10 @@ export class ViewDateOrdersComponent implements OnInit {
     this.ordersData.length = 0;
      await this.getOrders();
      this.loading = false;
+     if(this.ordersData.length == 0)
+     {
+       this.noOrdersError = true;
+     }
   }
+
 }

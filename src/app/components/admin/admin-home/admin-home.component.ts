@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -36,7 +37,9 @@ export class AdminHomeComponent implements OnInit {
     if(this.submitted)
     {
      this.dateError=false;
-     this.router.navigate(['view-date-orders']);
+     //console.log(formatDate(this.orderDetailsForm.value["orderDateSelector"], 'yyyy/MM/dd', 'en'))
+     this.router.navigate(['view-date-orders'], {state: {orderDate:
+      formatDate(this.orderDetailsForm.value["orderDateSelector"], 'yyyy/MM/dd', 'en')}});
     }
   }
 

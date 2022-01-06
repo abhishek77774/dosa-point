@@ -27,12 +27,13 @@
                             <td>{{thing.mobile}}</td>
                             <td>{{thing.email}}</td>  
                                <td>
-                                <button *ngIf="newUsers.length>0" class="pull-right btn btn-danger btn-sm" (click)="verifyUser(i)">Verify</button>
+                                <button *ngIf="newUsers.length>0" class="pull-right btn btn-info btn-sm" (click)="verifyUser(i)">Verify</button>
                                </td>                             
                             </tr> 
                         </tbody>  
                         </table> 
                     </div>   
+                    <div class="p-4"></div>
                 </div>
             </div>
         </div>

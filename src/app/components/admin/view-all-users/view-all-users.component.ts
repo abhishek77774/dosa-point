@@ -68,7 +68,5 @@ export class ViewAllUsersComponent implements OnInit {
       if (this.mySubscription) {
         this.mySubscription.unsubscribe();
       }
-     }
-  
-
+   }
 }

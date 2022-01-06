@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="col-sm-12 bg-light">
-        <div class="viewOrdersFrame d-flex py-2">
+        <div class="viewDateOrdersFrame d-flex py-2">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 mx-auto">
@@ -10,7 +10,7 @@
                         <hr class="bg-danger border-1 border-top border-danger">
                     <div class="fixWidthForDevices">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            
+                        <div *ngIf="noOrdersError">No orders found for the given date.</div> 
                         <table class="table"  *ngIf="ordersData.length>0"> 
                             <thead>
                                 <tr>
@@ -30,6 +30,7 @@
                         </tbody>  
                         </table> 
                     </div>   
+                    <div class="p-4"></div>
                 </div>
             </div>
         </div>

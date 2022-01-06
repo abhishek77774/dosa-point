@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmedValidator } from 'src/app/confirmed.validator';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, updatePhoneNumber } from "firebase/auth";
+import { ToastrService } from 'ngx-toastr';
 
 const auth = getAuth();
 
@@ -15,7 +16,7 @@ const auth = getAuth();
 export class CustomerRegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
-    private userService: UserServiceService) { }
+    private userService: UserServiceService, private toastr: ToastrService) { }
 
   registrationForm:any =  FormGroup;
   submitted = false;
@@ -47,8 +48,7 @@ export class CustomerRegistrationComponent implements OnInit {
          }
          else
          {
-         console.log("registering");
-         this.loading = false;  
+         this.loading = true;  
          createUserWithEmailAndPassword(auth, this.registrationForm.value["email"], this.registrationForm.value["password"])
          .then((userCredential) => {
         // Sign up 
@@ -57,7 +57,9 @@ export class CustomerRegistrationComponent implements OnInit {
           displayName: this.registrationForm.value["fullName"]
         })
         console.log("user created");
-        this.router.navigate(['registration-success']);
+        this.loading = false;
+        this.toastr.success('Registration Success. Your Account will be activated after verification.');
+        this.router.navigate(['customer-login']);
       })
       .catch((error) => {
         const errorCode = error.code;

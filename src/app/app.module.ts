@@ -50,7 +50,7 @@ import { ViewAllUsersComponent } from './components/admin/view-all-users/view-al
     ReactiveFormsModule,
     ToastrModule.forRoot(
       {
-        timeOut: 1800,
+        timeOut: 2400,
         positionClass: 'toast-bottom-right',
         preventDuplicates: true,
       }

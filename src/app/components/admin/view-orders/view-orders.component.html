@@ -4,13 +4,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 mx-auto">
-                        <h3 class="p-1 display-6 text-center">Orders</h3>
+                        <h3 class="p-1 display-6 text-center">Today's Orders</h3>
                         <div class="d-flex justify-content-center">
                         </div>
                         <hr class="bg-danger border-1 border-top border-danger">
                     <div class="fixWidthForDevices">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            
+                        <div *ngIf="noOrdersError">No orders found for today.</div> 
                         <table class="table"  *ngIf="ordersData.length>0"> 
                             <thead>
                                 <tr>

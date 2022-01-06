@@ -51,6 +51,7 @@ export class UserServiceService {
           totalAmount : orderData.totalAmount,
           orderDate: orderData.orderDate,
           orderStatus : orderData.orderStatus,
+          exactDateAndTimeOfOrder: serverTimestamp()
         };
 
     const docRef = await addDoc(collection(db, "orders"), orderConverter);
@@ -131,7 +132,7 @@ export class UserServiceService {
 
   async getAllUsers()
   { 
-    const getUsersQuery = query(collection(db, "users"));
+    const getUsersQuery = query(collection(db, "users"), where("activated", "==", true));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
     this.allUsers.push(doc.data());  
@@ -178,22 +179,26 @@ export class UserServiceService {
 
   async getOrders(orderDate:string)
   { 
-    console.log("date is:", orderDate)
-    if(this.ordersData.length <= 0 )
+    try
     {
+      console.log("date is service:", orderDate)
     const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", orderDate));
     const querySnapshotforOrders =  await getDocs(getOrdersQuery);
     querySnapshotforOrders.forEach((doc) => {
      this.ordersData.push(doc.data());  
-    });
+    }); 
   }
-    return this.ordersData;  
+  catch(error)
+  {
+    console.error(error);
+  }
+  return this.ordersData; 
   }
 
 
   async getNewOrderId()
   {
-    const checkAccountQuery = query(collection(db, "orders"), orderBy("orderDate", "desc"), limit(1));
+    const checkAccountQuery = query(collection(db, "orders"), orderBy("exactDateAndTimeOfOrder", "desc"), limit(1));
     const querySnapshotforAccount = await getDocs(checkAccountQuery);
     querySnapshotforAccount.forEach((doc) => {
       this.newOrderId = doc.data()["orderNumber"];

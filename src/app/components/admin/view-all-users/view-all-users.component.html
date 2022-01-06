@@ -6,7 +6,7 @@
                     <div class="col-sm-12 mx-auto">
                         <h3 class="p-1 display-6 text-center">All Users</h3>
                         <div class="d-flex justify-content-center">
-                        <span class="note">(Please click on deactivate to deny Login)</span>
+                        <span class="note">(Please click on Deny to Deactivate User)</span>
                         </div>
                         <hr class="bg-danger border-1 border-top border-danger">
                     <div class="fixWidthForDevices">
@@ -27,12 +27,13 @@
                             <td>{{thing.mobile}}</td>
                             <td>{{thing.email}}</td>  
                                <td>
-                                <button *ngIf="allUsers.length>0" class="pull-right btn btn-danger btn-sm" (click)="deactivateUser(i)">Deactivate</button>
+                                <button *ngIf="allUsers.length>0" class="pull-right btn btn-danger btn-sm" (click)="deactivateUser(i)">Deny</button>
                                </td>                             
                             </tr> 
                         </tbody>  
                         </table> 
                     </div>   
+                    <div class="p-4"></div>
                 </div>
             </div>
         </div>
