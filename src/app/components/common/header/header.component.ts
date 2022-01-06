@@ -11,8 +11,6 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class HeaderComponent implements OnInit {
 
   constructor( public userService: UserServiceService, private router: Router) {
-   // this.currentUser = this.userService.isLoggedIn;
-    //console.log(this.currentUser)
    }
 
   ngOnInit(): void {

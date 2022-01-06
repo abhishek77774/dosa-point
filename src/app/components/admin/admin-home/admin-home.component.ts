@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -10,7 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminHomeComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private userService: UserServiceService) {
    }
 
   orderDetailsForm:any =  FormGroup;
@@ -37,9 +39,10 @@ export class AdminHomeComponent implements OnInit {
     if(this.submitted)
     {
      this.dateError=false;
-     //console.log(formatDate(this.orderDetailsForm.value["orderDateSelector"], 'yyyy/MM/dd', 'en'))
-     this.router.navigate(['view-date-orders'], {state: {orderDate:
-      formatDate(this.orderDetailsForm.value["orderDateSelector"], 'yyyy/MM/dd', 'en')}});
+     const date = formatDate(this.orderDetailsForm.value["orderDateSelector"], 'yyyy/MM/dd', 'en');
+     this.userService.saveOrderDateForPageRefresh(date);
+    
+     this.router.navigate(['view-date-orders']);
     }
   }
 

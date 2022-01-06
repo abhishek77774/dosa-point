@@ -12,9 +12,11 @@ export class ViewDateOrdersComponent implements OnInit {
 
   ordersData = Array();
   loading = false;
-  orderDate: string = history.state.orderDate;
+  orderDate: string = '';
   savedDate:any;
   noOrdersError = false;
+  currentSale = 0;
+  totalSale = 0;
 
   constructor(private userService: UserServiceService,
     private router: Router) { 
@@ -22,17 +24,16 @@ export class ViewDateOrdersComponent implements OnInit {
       if(event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
           this.ordersData.length = 0;
+          this.totalSale = 0;
         }
       }
     });
-
-    localStorage.setItem('orderDate', this.orderDate);
   }
 
   async getOrders()
   {
     this.loading = true;
-     await this.userService.getOrders(localStorage.getItem('orderDate') as string).then(data=>
+     await this.userService.getOrders().then(data=>
       {
         this.ordersData = data;
       }).catch((error) => {
@@ -42,12 +43,39 @@ export class ViewDateOrdersComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.ordersData.length = 0;
+    this.totalSale = 0;
      await this.getOrders();
-     this.loading = false;
      if(this.ordersData.length == 0)
      {
        this.noOrdersError = true;
      }
+     this.loading = false;
+     this.orderDate = this.userService.getOrderDateForPageRefresh()
+     await this.getTotalSale();
+     this.getCurrentSale();
+     
   }
+
+  getCurrentSale()
+  {
+    this.ordersData.forEach((value)=>{
+      if(value.orderStatus == "Done")
+      {
+      this.currentSale = this.currentSale + value.totalAmount;
+      }
+    });
+    return this.currentSale;
+  }
+
+  async getTotalSale()
+  {
+    await this.userService.getTotalSale().then(data=>
+      {
+        this.totalSale = data;
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
 
 }

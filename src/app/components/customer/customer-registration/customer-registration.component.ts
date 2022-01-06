@@ -44,7 +44,6 @@ export class CustomerRegistrationComponent implements OnInit {
          {   
           this.alreadyRegisteredMobile = true;
           this.loading = false;  
-          console.log("already registered mobile");
          }
          else
          {
@@ -56,7 +55,6 @@ export class CustomerRegistrationComponent implements OnInit {
         updateProfile(userCredential.user, {
           displayName: this.registrationForm.value["fullName"]
         })
-        console.log("user created");
         this.loading = false;
         this.toastr.success('Registration Success. Your Account will be activated after verification.');
         this.router.navigate(['customer-login']);

@@ -4,6 +4,7 @@ import { getFirestore, query, where, getDocs, getDoc, collection, addDoc, Firest
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Router } from '@angular/router';
 import { OrderModel } from '../model/OrderModel';
+import { formatDate } from '@angular/common';
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyB3EE-fMVGHKpXDC4rs3-jUf1Z7KHEbGYs",
@@ -135,7 +136,8 @@ export class UserServiceService {
 
   async getAllUsers()
   { 
-    const getUsersQuery = query(collection(db, "users"), where("activated", "==", true));
+    const getUsersQuery = query(collection(db, "users"), where("activated", "==", true),
+    orderBy("timeStamp", "desc"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
     querySnapshotforMenu.forEach((doc) => {
     this.allUsers.push(doc.data());  
@@ -181,11 +183,30 @@ export class UserServiceService {
     return true;  
   }
 
-  async getOrders(orderDate:string)
+  async getOrders()
   { 
     try
     {
-    const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", orderDate));
+    const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", this.getOrderDateForPageRefresh()),
+    orderBy("exactDateAndTimeOfOrder", "desc"));
+    const querySnapshotforOrders =  await getDocs(getOrdersQuery);
+    querySnapshotforOrders.forEach((doc) => {
+     this.ordersData.push(doc.data());  
+    }); 
+  }
+  catch(error)
+  {
+    console.error(error);
+  }
+  return this.ordersData; 
+  }
+
+  async getTodaysOrders()
+  { 
+    try
+    {
+    const getOrdersQuery = query(collection(db, "orders"), where("orderDate", "==", formatDate(new Date(), 'yyyy/MM/dd', 'en')),
+    orderBy("exactDateAndTimeOfOrder", "desc"));
     const querySnapshotforOrders =  await getDocs(getOrdersQuery);
     querySnapshotforOrders.forEach((doc) => {
      this.ordersData.push(doc.data());  
@@ -203,7 +224,7 @@ export class UserServiceService {
     try
     {
     const getOrdersQuery = query(collection(db, "orders"), where("email", "==", email),
-    where("orderStatus", "==", "Done"));
+    where("orderStatus", "==", "Done"), orderBy("exactDateAndTimeOfOrder", "desc"));
     const querySnapshotforOrders =  await getDocs(getOrdersQuery);
     querySnapshotforOrders.forEach((doc) => {
      this.myOrdersData.push(doc.data());  
@@ -220,6 +241,7 @@ export class UserServiceService {
   { 
     try
     {
+    this.totalSale = 0;
     const getOrdersQuery = query(collection(db, "orders"), where("orderStatus", "==", "Done"));
     const querySnapshotforOrders =  await getDocs(getOrdersQuery);
     querySnapshotforOrders.forEach((doc) => {
@@ -268,17 +290,13 @@ export class UserServiceService {
     return user;
   }
 
-  get getLoggedInUserCredentials(): any {
-    const user = localStorage.getItem('userCredentials');
-    return user;
-  }
   
   
   SignOut() {
     auth.signOut().then(() => {
       localStorage.removeItem('user');
       localStorage.removeItem('userInfo');
-      localStorage.removeItem('userCredentials');
+      localStorage.removeItem('orderDate');
       this.menuFromDb.length = 0;  
       this.router.navigate(['customer-login']);
     })
@@ -291,6 +309,16 @@ export class UserServiceService {
     newMenuData.forEach(async (value: any) => {
       const docRef = await addDoc(collection(db, "menu"), value);
     }); 
+  }
+
+  saveOrderDateForPageRefresh(value: string)
+  {
+    localStorage.setItem('orderDate', value);
+  }
+
+  getOrderDateForPageRefresh()
+  {
+    return localStorage.getItem('orderDate') as string;
   }
 
   clearMenu()

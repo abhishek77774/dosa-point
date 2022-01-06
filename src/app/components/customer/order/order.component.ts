@@ -15,7 +15,6 @@ export class OrderComponent implements OnInit {
   constructor(private router: Router, private userService: UserServiceService) { }
 
   ngOnInit(): void {
-    console.log("order no. is:", this.orderNumber)
   }
 
   goToMenu()

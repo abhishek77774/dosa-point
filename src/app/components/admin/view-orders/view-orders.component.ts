@@ -22,6 +22,7 @@ export class ViewOrdersComponent implements OnInit {
       if(event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
           this.ordersData.length = 0;
+          this.totalSale = 0;
         }
       }
     });
@@ -30,7 +31,7 @@ export class ViewOrdersComponent implements OnInit {
   async getOrders()
   {
     this.loading = true;
-     await this.userService.getOrders(formatDate(new Date(), 'yyyy/MM/dd', 'en')).then(data=>
+     await this.userService.getTodaysOrders().then(data=>
       {
         this.ordersData = data;
       }).catch((error) => {
@@ -40,14 +41,16 @@ export class ViewOrdersComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.ordersData.length = 0;
+    this.totalSale = 0;
      await this.getOrders();
      if(this.ordersData.length == 0)
      {
         this.noOrdersError = true;
-     }
+     } 
      this.loading = false;
      await this.getTotalSale();
      this.getCurrentSale();
+     
   }
 
   getCurrentSale()

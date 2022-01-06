@@ -11,7 +11,7 @@
                     <div class="fixWidthForDevices">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         <div *ngIf="noOrdersError">You have not placed any order yet.</div> 
-                        <table class="table"  *ngIf="myOrders.length>0"> 
+                        <table class="table table-bordered"  *ngIf="myOrders.length>0"> 
                             <thead>
                                 <tr>
                                 <th>Order</th>
