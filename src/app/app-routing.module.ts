@@ -95,7 +95,9 @@ const routes: Routes = [
       path: 'update-profile',
       component: UpdateProfileComponent,
       canActivate: [AuthGuard],
-    }
+    },
+
+    { path: "**",redirectTo:"customer-login"}
 
 
 ];
