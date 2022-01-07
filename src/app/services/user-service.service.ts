@@ -38,8 +38,6 @@ export class UserServiceService {
   async writeToUsersCollection(formdata:any)
   {
     const docRef = await addDoc(collection(db, "users"), formdata);
-    
-    //return docRef;
   }
 
   
@@ -136,6 +134,7 @@ export class UserServiceService {
 
   async getAllUsers()
   { 
+    this.allUsers.length = 0;
     const getUsersQuery = query(collection(db, "users"), where("activated", "==", true),
     orderBy("timeStamp", "desc"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
@@ -147,6 +146,7 @@ export class UserServiceService {
 
   async getNewUsers()
   { 
+    this.newUsers.length = 0;
     const getUsersQuery = query(collection(db, "users"), where("activated", "==", false),
     orderBy("timeStamp", "desc"));
     const querySnapshotforMenu =  await getDocs(getUsersQuery);
@@ -183,6 +183,7 @@ export class UserServiceService {
     return true;  
   }
 
+
   async getOrders()
   { 
     try
@@ -201,6 +202,7 @@ export class UserServiceService {
   return this.ordersData; 
   }
 
+
   async getTodaysOrders()
   { 
     try
@@ -218,6 +220,7 @@ export class UserServiceService {
   }
   return this.ordersData; 
   }
+
 
   async getMyOrders(email: string)
   { 
@@ -289,7 +292,6 @@ export class UserServiceService {
     const user = localStorage.getItem('user');
     return user;
   }
-
   
   
   SignOut() {
