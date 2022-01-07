@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { NavigationStart } from '@angular/router';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
+import { ToastrService } from 'ngx-toastr';
 
 const auth = getAuth();
 
@@ -16,7 +16,7 @@ const auth = getAuth();
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
-    private userService: UserServiceService) {}
+    private userService: UserServiceService, private toastr: ToastrService) {}
   
   userData: any;
   userInfo:any;
@@ -62,9 +62,34 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(this.userData));
           localStorage.setItem('userCredentials', JSON.stringify(userCredential));
           this.getUserInfo(this.loginForm.value['email']);
-          console.log("signed in");
+          this.toastr.success('Login Success! Welcome');
+          
+          //manage user session
+          let userSessionTimeout = null;
+          if (user === null && userSessionTimeout) {
+            clearTimeout(userSessionTimeout);
+            userSessionTimeout = null;
+          } else {
+          user.getIdTokenResult().then((idTokenResult) => {
+            const authTime = idTokenResult.claims.auth_time as any * 1000;
+            const sessionDurationInMilliseconds = 60*5*1000; // 5 min
+            const expirationInMilliseconds = sessionDurationInMilliseconds - (Date.now() - authTime);
+           
+            setTimeout(()=>{                           
+              this.toastr.info("Your session will expire in 1 minute")
+          }, expirationInMilliseconds - 60000);
+
+            setTimeout(()=>{                           
+              this.toastr.error("Session expired! Please login again.")
+          }, expirationInMilliseconds);
+           
+            userSessionTimeout = setTimeout(() => this.userService.SignOut(), expirationInMilliseconds);
+            
+          });
+
           this.router.navigate(['/menu']);
          } 
+        }
         });
     })
     .catch((error) => {
@@ -92,7 +117,6 @@ export class LoginComponent implements OnInit {
     ,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     password: ['', [Validators.required]],
     });
-
   }
 
   async getUserInfo(email:string)
