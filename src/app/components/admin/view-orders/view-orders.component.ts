@@ -15,7 +15,7 @@ export class ViewOrdersComponent implements OnInit {
   noOrdersError = false;
   currentSale = 0;
   totalSale = 0;
-
+  
   constructor(private userService: UserServiceService,
     private router: Router) {
     router.events.forEach((event) => {

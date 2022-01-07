@@ -13,7 +13,8 @@ export class ViewAllUsersComponent implements OnInit {
   allUsers = Array();
   loading = false;
   mySubscription: any;
-
+  searchText="";
+  
   constructor(private userService: UserServiceService, private toastr: ToastrService,
     private router: Router) {
       this.router.routeReuseStrategy.shouldReuseRoute = function () {

@@ -13,7 +13,8 @@ export class ViewUsersComponent implements OnInit {
   newUsers = Array();
   loading = false;
   mySubscription: any;
-
+  searchText="";
+  
   constructor(private userService: UserServiceService, private toastr: ToastrService,
     private router: Router) {
       this.router.routeReuseStrategy.shouldReuseRoute = function () {
