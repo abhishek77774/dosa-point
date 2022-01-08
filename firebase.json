@@ -5,7 +5,7 @@
   },
   "hosting": [
     {
-      "site": "dosapoint",
+      "site": "refreshmentspoint",
       "public": "public",
       "ignore": [
         "firebase.json",
