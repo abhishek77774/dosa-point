@@ -11,8 +11,9 @@
                         <hr class="bg-danger border-1 border-top border-danger">
                     <div class="fixWidthForDevices">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            
-                        <table class="table table-bordered"  *ngIf="newUsers.length>0"> 
+                        <div class="input-group rounded">
+                            <input type="text" *ngIf="newUsers.length>0" class="rounded" name="searchText" [(ngModel)]="searchText" placeholder="Search By Name or Email"/>
+                        </div> <table class="table table-bordered"  *ngIf="newUsers.length>0"> 
                             <thead>
                                 <tr>
                                 <th>Name</th>
@@ -22,7 +23,7 @@
                                 </tr>      
                             </thead>
                             <tbody>
-                            <tr *ngFor="let thing of newUsers; let i = index;">
+                            <tr *ngFor="let thing of newUsers | searchFilter: searchText; let i = index;">
                             <td>{{thing.fullName}}</td> 
                             <td>{{thing.mobile}}</td>
                             <td>{{thing.email}}</td>  

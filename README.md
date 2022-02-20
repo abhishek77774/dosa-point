@@ -1,27 +1,23 @@
-# DosaPoint
+# Refreshments-Point
+#### (A mobile friendly and light weight web-app for restaurant and its customers)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+It is a cloud-hosted, mobile-ready web-app backed by Firebase.
 
-## Development server
+### Tech-Stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Angular (Version 13)
+- Bootstrap (Version 5)
+- Firebase (Backend-as-a-Service, Version 9)
+- Cloud Firestore (Cloud Database)
+- Firebase Hosting
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Customers can register and login (after verification of the account by admin)
+- They can see menu and order food. (Payment gateway is not integrated yet)
+- They can see and cancel previous orders using My Orders features.
+- There is a seperate login for Admin.
+- Admin can activate or deactivate any user.
+- Admin can update menu items.
+- They can view today's sale with order details in a single click.
+- Sale on a particular day can be viewed using date selector provided in the bottom section.

@@ -6,7 +6,7 @@
     "dosapointfirebase": {
       "hosting": {
         "dosa-point": [
-          "dosapoint"
+          "refreshmentspoint"
         ]
       }
     }

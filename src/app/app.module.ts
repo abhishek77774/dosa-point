@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ import { ViewDateOrdersComponent } from './components/admin/view-date-orders/vie
 import { ViewAllUsersComponent } from './components/admin/view-all-users/view-all-users.component';
 import { UserProfileComponent } from './components/customer/user-profile/user-profile.component';
 import { UpdateProfileComponent } from './components/customer/update-profile/update-profile.component';
+import { SearchFilterPipe } from './helpers/search-filter.pipe';
 
 
 @NgModule({
@@ -45,13 +46,15 @@ import { UpdateProfileComponent } from './components/customer/update-profile/upd
     ViewDateOrdersComponent,
     ViewAllUsersComponent,
     UserProfileComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     ToastrModule.forRoot(
       {
         timeOut: 2400,

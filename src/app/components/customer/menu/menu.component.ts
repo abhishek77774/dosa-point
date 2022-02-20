@@ -4,6 +4,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 import { NavigationStart } from '@angular/router';
 import { OrderModel } from 'src/app/model/OrderModel';
 import { DatePipe, formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +15,7 @@ import { DatePipe, formatDate } from '@angular/common';
 export class MenuComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserServiceService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe, private toastr: ToastrService) {
     router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {

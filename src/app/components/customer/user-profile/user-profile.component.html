@@ -14,7 +14,8 @@
                         <table class="table table-bordered"  *ngIf="myOrders.length>0"> 
                             <thead>
                                 <tr>
-                                <th>Order</th>
+                                <th class="w-order">Order</th>
+                                <th class="w-date">Date</th>
                                 <th>Items</th>
                                 <th>Amount</th>
                                 <th>Action</th>
@@ -22,7 +23,8 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let thing of myOrders; let i = index;">
-                            <td>{{thing.orderNumber}}</td> 
+                            <td class="w-10">{{thing.orderNumber}}</td> 
+                            <td class="w-10">{{thing.orderDate}}</td> 
                             <td>{{thing.orderItems}}</td>
                             <td>{{thing.totalAmount}}</td>  
                                <td>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class OrderComponent implements OnInit {
   orderNumber:any = history.state.newOrderNumber;
   totalAmount:any = history.state.totalAmount;;
 
-  constructor(private router: Router, private userService: UserServiceService) { }
+  constructor(private router: Router, private userService: UserServiceService
+    , private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
