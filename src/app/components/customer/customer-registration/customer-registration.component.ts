@@ -56,7 +56,7 @@ export class CustomerRegistrationComponent implements OnInit {
           displayName: this.registrationForm.value["fullName"]
         })
         this.loading = false;
-        this.toastr.success('Registration Success. Your Account will be activated after verification.');
+        this.toastr.success('Registration Success. Your Account will be activated after verification from Admin.');
         this.router.navigate(['customer-login']);
       })
       .catch((error) => {
